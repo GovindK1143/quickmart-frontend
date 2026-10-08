@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { LockKeyhole, Mail, ShoppingBasket } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
+
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -43,7 +46,9 @@ function Login() {
       if (loggedInUser.role === "ADMIN") {
         navigate("/admin", { replace: true });
       } else {
-        navigate("/home", { replace: true });
+        const destination = location.state?.from?.pathname || "/home";
+
+        navigate(destination, { replace: true });
       }
     } catch (requestError) {
       const message =
@@ -57,61 +62,112 @@ function Login() {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-card">
-        <div className="login-header">
-          <h1>QuickMart</h1>
-          <p>Welcome back</p>
-        </div>
+    <div className="qm-page">
+      <main className="login-page">
+        <div className="login-background-card">
+          <div className="login-brand-panel">
+            <div className="login-brand-icon">
+              <ShoppingBasket size={42} />
+            </div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="username">Email or Mobile</label>
+            <p className="login-eyebrow">QUICKMART</p>
 
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Enter email or mobile"
-              autoComplete="username"
-            />
+            <h1>
+              Fresh groceries.
+              <br />
+              Fast delivery.
+            </h1>
+
+            <p>
+              Shop your everyday essentials at great prices and get them
+              delivered to your doorstep.
+            </p>
+
+            <div className="login-feature">
+              <span>✓</span>
+              <span>Quality products</span>
+            </div>
+
+            <div className="login-feature">
+              <span>✓</span>
+              <span>Fast delivery</span>
+            </div>
+
+            <div className="login-feature">
+              <span>✓</span>
+              <span>Easy shopping</span>
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
+          <div className="login-card">
+            <div className="login-header">
+              <p className="login-small-title">WELCOME BACK</p>
+              <h2>Sign in to QuickMart</h2>
+              <p>Continue shopping from where you left off.</p>
+            </div>
 
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter password"
-              autoComplete="current-password"
-            />
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <label htmlFor="username">Email or Mobile</label>
+
+                <div className="login-input-wrapper">
+                  <Mail size={19} />
+
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Enter email or mobile"
+                    autoComplete="username"
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+
+                <div className="login-input-wrapper">
+                  <LockKeyhole size={19} />
+
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter password"
+                    autoComplete="current-password"
+                  />
+                </div>
+              </div>
+
+              {error && <div className="login-error">{error}</div>}
+
+              <button
+                type="submit"
+                className="login-submit-button"
+                disabled={loading}
+              >
+                {loading ? "Signing in..." : "Sign In"}
+              </button>
+            </form>
+
+            <div className="login-footer">
+              <span>Don't have an account?</span>
+
+              <button
+                type="button"
+                className="register-link"
+                onClick={() => navigate("/register")}
+              >
+                Create an account
+              </button>
+            </div>
           </div>
-
-          {error && <div className="login-error">{error}</div>}
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
-        </form>
-
-        <div className="login-footer">
-          <p>Don't have an account?</p>
-
-          <button
-            type="button"
-            className="register-link"
-            onClick={() => navigate("/register")}
-          >
-            Create an account
-          </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 }
