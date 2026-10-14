@@ -1,9 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "../pages/auth/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Home from "../pages/customer/Home";
 import Cart from "../pages/customer/Cart";
 import Checkout from "../pages/customer/Checkout";
+import Orders from "../pages/customer/Orders";
 
 function AdminDashboard() {
   return (
@@ -23,15 +24,6 @@ function Register() {
   );
 }
 
-function Orders() {
-  return (
-    <div className="page-placeholder">
-      <h1>My Orders</h1>
-      <p>Order history will be implemented next.</p>
-    </div>
-  );
-}
-
 function NotFound() {
   return (
     <div className="page-placeholder">
@@ -42,30 +34,55 @@ function NotFound() {
 }
 
 function AppRoutes() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Remember the page visible behind the login modal.
+  const backgroundLocation = location.state?.backgroundLocation;
+
+  const closeLoginModal = () => {
+    if (backgroundLocation) {
+      const { pathname, search, hash, state } = backgroundLocation;
+
+      navigate({ pathname, search, hash }, { replace: true, state });
+    } else {
+      navigate("/home", { replace: true });
+    }
+  };
+
   return (
-    <Routes>
-      {/* Public routes */}
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+    <>
+      {/* Render the previous page behind the login popup. */}
+      <Routes location={backgroundLocation || location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      {/* Public cart - guest or customer */}
-      <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart />} />
 
-      {/* Customer-only routes */}
-      <Route element={<ProtectedRoute allowedRoles={["CUSTOMER"]} />}>
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/orders" element={<Orders />} />
-      </Route>
+        <Route element={<ProtectedRoute allowedRoles={["CUSTOMER"]} />}>
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Orders />} />
+        </Route>
 
-      {/* Admin-only routes */}
-      <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Route>
+        <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      {/* Render Login again, this time as a modal over the background page. */}
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path="/login"
+            element={<Login isModal onClose={closeLoginModal} />}
+          />
+        </Routes>
+      )}
+    </>
   );
 }
 

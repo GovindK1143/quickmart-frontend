@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Search,
   MapPin,
-  User,
   ShoppingCart,
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
 import { useCart } from "../../context/useCart";
+import "../../styles/quickmart-home.css";
 
 const DEFAULT_CATEGORIES = [
   "Fruits & Vegetables",
@@ -33,21 +33,58 @@ function QuickMartHeader({
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { cart } = useCart();
-
+  const location = useLocation();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+
   const userMenuRef = useRef(null);
+  const categoryMenuRef = useRef(null);
+  const moreMenuRef = useRef(null);
+
+  const availableCategories = [
+    ...new Set(
+      categories.filter(
+        (category) => typeof category === "string" && category.trim() !== "",
+      ),
+    ),
+  ];
+
+  const visibleCategories = availableCategories.slice(0, 5);
+  const moreCategories = availableCategories.slice(5);
 
   useEffect(() => {
     const handleDocumentClick = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
         setUserMenuOpen(false);
       }
+
+      if (
+        categoryMenuRef.current &&
+        !categoryMenuRef.current.contains(event.target)
+      ) {
+        setCategoryMenuOpen(false);
+      }
+
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target)) {
+        setMoreMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setUserMenuOpen(false);
+        setCategoryMenuOpen(false);
+        setMoreMenuOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleDocumentClick);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("mousedown", handleDocumentClick);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -59,6 +96,8 @@ function QuickMartHeader({
 
   const handleCategory = (category) => {
     setUserMenuOpen(false);
+    setCategoryMenuOpen(false);
+    setMoreMenuOpen(false);
 
     if (onCategoryClick) {
       onCategoryClick(category);
@@ -69,38 +108,42 @@ function QuickMartHeader({
   };
 
   return (
-    <>
+    <div className="qm-sticky-header-shell">
       <header className="quickmart-header">
         <div className="quickmart-header-inner">
-          <Link to="/home" className="quickmart-logo">
+          <Link
+            to="/home"
+            className="quickmart-logo"
+            onClick={(event) => {
+              event.preventDefault();
+              window.location.assign("/home");
+            }}
+          >
             QuickMart
           </Link>
 
-          <div className="quickmart-search">
-            <Search size={22} />
-
+          <label className="quickmart-search">
+            <Search size={22} aria-hidden="true" />
             <input
-              type="text"
-              placeholder="Search for products..."
+              type="search"
+              aria-label="Search products"
+              placeholder="Search for products, brands and more..."
               value={searchText}
-              onChange={(event) => {
-                if (onSearchChange) {
-                  onSearchChange(event.target.value);
-                }
-              }}
+              onChange={(event) => onSearchChange?.(event.target.value)}
             />
-          </div>
+          </label>
 
-          <div className="delivery-box">
-            <div className="delivery-icon">
+          <div
+            className="delivery-box"
+            aria-label="Delivery in 10 minutes; location not selected"
+          >
+            <span className="delivery-icon">
               <MapPin size={21} />
-            </div>
-
-            <div>
+            </span>
+            <span className="qm-delivery-copy">
               <strong>Delivery in 10 mins</strong>
               <span>Select Location</span>
-            </div>
-
+            </span>
             <ChevronDown size={19} />
           </div>
 
@@ -112,16 +155,15 @@ function QuickMartHeader({
                 onClick={() => setUserMenuOpen((previous) => !previous)}
                 aria-expanded={userMenuOpen}
               >
-                <User size={25} />
-
-                <div className="customer-user-text">
+                <span className="qm-user-avatar" aria-hidden="true">
+                  {(user.name?.trim()?.[0] || "C").toUpperCase()}
+                </span>
+                <span className="customer-user-text">
                   <span className="customer-user-label">Welcome</span>
-
                   <strong>Hi, {user.name?.split(" ")[0] || "Customer"}</strong>
-                </div>
-
+                </span>
                 <ChevronDown
-                  size={21}
+                  size={20}
                   className={
                     userMenuOpen
                       ? "customer-user-chevron open"
@@ -141,7 +183,6 @@ function QuickMartHeader({
                   >
                     Home
                   </button>
-
                   <button
                     type="button"
                     onClick={() => {
@@ -151,7 +192,6 @@ function QuickMartHeader({
                   >
                     My Orders
                   </button>
-
                   <button
                     type="button"
                     className="customer-logout-button"
@@ -163,7 +203,11 @@ function QuickMartHeader({
               )}
             </div>
           ) : (
-            <Link to="/login" className="login-header-button">
+            <Link
+              to="/login"
+              state={{ backgroundLocation: location }}
+              className="login-header-button"
+            >
               Login / Sign Up
             </Link>
           )}
@@ -171,10 +215,9 @@ function QuickMartHeader({
           <Link
             to="/cart"
             className="header-cart-button"
-            aria-label="Shopping cart"
+            aria-label={`Shopping cart, ${cart.totalItems || 0} items`}
           >
             <ShoppingCart size={29} />
-
             {cart.totalItems > 0 && (
               <span className="header-cart-count">{cart.totalItems}</span>
             )}
@@ -182,19 +225,60 @@ function QuickMartHeader({
         </div>
       </header>
 
-      <nav className="category-navigation">
+      <nav className="category-navigation" aria-label="Shop categories">
         <div className="category-navigation-inner">
-          <button
-            type="button"
-            className="shop-category-button"
-            onClick={() => handleCategory("")}
-          >
-            Shop by Category
-            <ChevronDown size={18} />
-          </button>
+          {/* Shop by Category dropdown */}
+          <div className="shop-category-menu-wrap" ref={categoryMenuRef}>
+            <button
+              type="button"
+              className="shop-category-button"
+              aria-expanded={categoryMenuOpen}
+              aria-haspopup="menu"
+              onClick={() => {
+                setCategoryMenuOpen((previous) => !previous);
+                setMoreMenuOpen(false);
+              }}
+            >
+              Shop by Category
+              <ChevronDown
+                size={18}
+                className={categoryMenuOpen ? "category-chevron-open" : ""}
+              />
+            </button>
 
+            {categoryMenuOpen && (
+              <div className="category-dropdown" role="menu">
+                <button
+                  type="button"
+                  role="menuitem"
+                  className={`category-dropdown-item ${
+                    !selectedCategory ? "active" : ""
+                  }`}
+                  onClick={() => handleCategory("")}
+                >
+                  All Products
+                </button>
+
+                {availableCategories.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    role="menuitem"
+                    className={`category-dropdown-item ${
+                      selectedCategory === category ? "active" : ""
+                    }`}
+                    onClick={() => handleCategory(category)}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Main navigation: first five categories */}
           <div className="category-links">
-            {categories.map((category) => (
+            {visibleCategories.map((category) => (
               <button
                 key={category}
                 type="button"
@@ -209,18 +293,49 @@ function QuickMartHeader({
               </button>
             ))}
 
-            <button
-              type="button"
-              className="category-more"
-              onClick={() => handleCategory("")}
-            >
-              More
-              <ChevronRight size={18} />
-            </button>
+            {/* More dropdown: remaining categories */}
+            {moreCategories.length > 0 && (
+              <div className="category-more-wrap" ref={moreMenuRef}>
+                <button
+                  type="button"
+                  className="category-more"
+                  aria-expanded={moreMenuOpen}
+                  aria-haspopup="menu"
+                  onClick={() => {
+                    setMoreMenuOpen((previous) => !previous);
+                    setCategoryMenuOpen(false);
+                  }}
+                >
+                  More
+                  <ChevronRight size={18} />
+                </button>
+
+                {moreMenuOpen && (
+                  <div
+                    className="category-dropdown category-dropdown-right"
+                    role="menu"
+                  >
+                    {moreCategories.map((category) => (
+                      <button
+                        key={category}
+                        type="button"
+                        role="menuitem"
+                        className={`category-dropdown-item ${
+                          selectedCategory === category ? "active" : ""
+                        }`}
+                        onClick={() => handleCategory(category)}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 }
 

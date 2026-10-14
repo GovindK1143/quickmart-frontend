@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "./useAuth";
 import {
   addCartItem,
+  checkoutCart,
   clearCart as clearServerCart,
   getCart,
   removeCartItem,
@@ -42,6 +43,38 @@ export function CartProvider({ children }) {
   const [error, setError] = useState("");
 
   const loadingRef = useRef(false);
+  const refreshInFlightRef = useRef(false);
+
+  const refreshCart = useCallback(async () => {
+    if (authLoading || user?.role !== "CUSTOMER") {
+      return null;
+    }
+
+    // Avoid overlapping with initial loading or another refresh.
+    if (loadingRef.current || refreshInFlightRef.current) {
+      return null;
+    }
+
+    refreshInFlightRef.current = true;
+
+    try {
+      const latestCart = await getCart();
+
+      // Updating shared context also updates the header badge
+      // and the cart page.
+      setCart(latestCart);
+
+      return latestCart;
+    } catch (refreshError) {
+      // A background refresh failure should not hide the
+      // currently displayed cart or interrupt shopping.
+      console.warn("Unable to refresh cart from the server:", refreshError);
+
+      return null;
+    } finally {
+      refreshInFlightRef.current = false;
+    }
+  }, [authLoading, user]);
 
   useEffect(() => {
     if (authLoading || loadingRef.current) {
@@ -99,6 +132,31 @@ export function CartProvider({ children }) {
 
     loadCart();
   }, [user, authLoading]);
+
+  useEffect(() => {
+    if (authLoading || user?.role !== "CUSTOMER") {
+      return undefined;
+    }
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        void refreshCart();
+      }
+    };
+
+    // Keep the cart synchronized while the customer is shopping.
+    const intervalId = window.setInterval(refreshWhenVisible, 10000);
+
+    // Also refresh when the customer returns to the browser tab.
+    window.addEventListener("focus", refreshWhenVisible);
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener("focus", refreshWhenVisible);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
+  }, [authLoading, user, refreshCart]);
 
   const addProduct = async (product) => {
     setError("");
@@ -235,6 +293,65 @@ export function CartProvider({ children }) {
     }
   };
 
+  const placeOrder = async () => {
+    setError("");
+
+    if (user?.role !== "CUSTOMER") {
+      const requestError = new Error(
+        "Please log in with a customer account to place an order.",
+      );
+      setError(requestError.message);
+      throw requestError;
+    }
+
+    try {
+      // Submit the existing server-side cart for checkout.
+      const orderResponse = await checkoutCart();
+
+      const paymentStatus = String(
+        orderResponse?.paymentStatus ?? "PENDING",
+      ).toUpperCase();
+
+      if (paymentStatus === "SUCCESS") {
+        // The backend clears the cart after successful payment.
+        setCart(emptyCart);
+
+        // Synchronize with the server's current cart state.
+        try {
+          const latestCart = await getCart();
+          setCart(latestCart);
+        } catch (refreshError) {
+          // The order succeeded, so don't report it as a failed order
+          // solely because refreshing the cart failed.
+          console.error(
+            "Order succeeded, but refreshing the cart failed:",
+            refreshError,
+          );
+        }
+      } else {
+        // For FAILED, PENDING, or unknown status, refresh the cart
+        // because the backend preserves its items in these cases.
+        try {
+          const latestCart = await getCart();
+          setCart(latestCart);
+        } catch (refreshError) {
+          // Retain the current cart if the refresh request fails.
+          console.error("Unable to refresh cart after checkout:", refreshError);
+        }
+      }
+
+      return orderResponse;
+    } catch (requestError) {
+      const message = getErrorMessage(
+        requestError,
+        "Unable to place the order. Please try again.",
+      );
+
+      setError(message);
+      throw requestError;
+    }
+  };
+
   const value = {
     cart,
     loading,
@@ -243,6 +360,8 @@ export function CartProvider({ children }) {
     updateItem,
     removeItem,
     clearCart,
+    placeOrder,
+    refreshCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

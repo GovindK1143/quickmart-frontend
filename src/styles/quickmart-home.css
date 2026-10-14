@@ -1,0 +1,1514 @@
+/* QuickMart homepage refresh. Loaded by QuickMartHeader so header behavior
+   is shared by every page that renders the common header. */
+
+:root {
+  --qm-home-green: #006b52;
+  --qm-home-deep: #064e3b;
+  --qm-home-cream: #fff8e8;
+  --qm-home-text: #123b35;
+  --qm-home-muted: #6f7e78;
+  --qm-home-border: #e4e6df;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 175px;
+}
+
+/* Keep the complete two-row header together at the top. */
+.qm-sticky-header-shell {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  isolation: isolate;
+  width: 100%;
+  box-shadow: 0 5px 16px rgba(18, 59, 53, 0.08);
+}
+
+.quickmart-header {
+  position: relative !important;
+  z-index: 1;
+  height: 78px;
+  min-height: 78px;
+  background: var(--qm-home-deep);
+}
+
+.quickmart-header-inner {
+  width: min(1540px, calc(100% - 88px));
+  min-height: 78px;
+  margin: 0 auto;
+  padding: 10px 0;
+  gap: clamp(14px, 2vw, 28px);
+}
+
+.quickmart-logo {
+  font-size: clamp(27px, 2.35vw, 36px);
+  letter-spacing: -1.4px;
+}
+
+.quickmart-search {
+  height: 50px;
+  min-width: 160px;
+  max-width: none;
+  border-radius: 11px;
+}
+
+.quickmart-search input {
+  font-size: 15px;
+}
+
+.delivery-box {
+  flex: 0 1 250px;
+  min-width: 205px;
+  height: 50px;
+  background: transparent;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.qm-delivery-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.qm-delivery-copy strong {
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.qm-delivery-copy > span {
+  margin-top: 2px;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.delivery-icon {
+  color: #ffe7a1;
+}
+
+.login-header-button {
+  flex: 0 0 auto;
+  padding: 13px 19px;
+  border-radius: 10px;
+  color: var(--qm-home-deep);
+  background: var(--qm-home-cream);
+  font-size: 15px;
+}
+
+.customer-user-menu {
+  position: relative;
+  flex: 0 0 auto;
+  z-index: 10;
+}
+
+.customer-user-trigger {
+  min-width: 145px;
+  border: 0;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #fff;
+  background: transparent;
+  cursor: pointer;
+}
+
+.qm-user-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--qm-home-deep);
+  background: var(--qm-home-cream);
+  font-weight: 800;
+}
+
+.customer-user-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.customer-user-label {
+  font-size: 11px;
+  opacity: 0.82;
+}
+
+.customer-user-text strong {
+  font-size: 14px;
+}
+
+.customer-user-chevron {
+  transition: transform 0.2s ease;
+}
+
+.customer-user-chevron.open {
+  transform: rotate(180deg);
+}
+
+.header-cart-button {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  background: var(--qm-home-cream);
+  border-radius: 11px;
+}
+
+.header-cart-count {
+  top: -6px;
+  right: -6px;
+  min-width: 23px;
+  height: 23px;
+  font-size: 12px;
+  background: #e3262e;
+  border-color: var(--qm-home-deep);
+}
+
+.shop-category-button {
+  height: 42px;
+  min-width: 190px;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-radius: 9px;
+  background: #008166;
+  font-size: 14px;
+}
+
+.category-links {
+  gap: clamp(10px, 1.3vw, 22px);
+}
+
+.category-link,
+.category-more {
+  flex: 0 0 auto;
+  padding: 12px 5px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.category-link.active::after {
+  bottom: 1px;
+}
+
+/* Page layout and promotional shortcuts. */
+.qm-home-main {
+  width: min(1540px, 100%);
+  padding: 24px 44px 58px;
+}
+
+.qm-promo-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 22px;
+}
+
+.qm-promo-shortcut {
+  position: relative;
+  min-width: 0;
+  min-height: 78px;
+  padding: 12px 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(17, 64, 53, 0.06);
+  border-radius: 12px;
+  text-align: left;
+  color: var(--qm-home-text);
+  background: #f0f1e5;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.qm-promo-shortcut:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(18, 59, 53, 0.09);
+}
+
+.qm-promo-shortcut.mint {
+  background: linear-gradient(125deg, #edf5e8, #fff7e4);
+}
+.qm-promo-shortcut.purple {
+  background: linear-gradient(125deg, #f5eaf8, #fff8e8);
+}
+.qm-promo-shortcut.olive {
+  background: linear-gradient(125deg, #eef0d9, #f8f4df);
+}
+.qm-promo-shortcut.rose {
+  background: linear-gradient(125deg, #fff0e8, #f7eee2);
+}
+.qm-promo-shortcut.cream {
+  background: linear-gradient(125deg, #fff7e8, #f4ead6);
+}
+.qm-promo-shortcut.sand {
+  background: linear-gradient(125deg, #f5ead8, #eef0df);
+}
+
+.qm-promo-icon {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 27px;
+}
+
+.qm-promo-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.qm-promo-text strong {
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.qm-promo-text small {
+  color: #5d6b65;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.qm-promo-arrow {
+  flex: 0 0 auto;
+  margin-left: auto;
+  opacity: 0.65;
+}
+
+/* Hero banner. The gradient remains if the remote hero photo is unavailable. */
+.qm-home-hero {
+  position: relative;
+  min-height: 280px;
+  margin: 0 0 31px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 14px;
+  background: linear-gradient(105deg, #fff1d4 0%, #fff7e7 53%, #e0edce 100%);
+}
+
+.qm-home-hero-content {
+  position: relative;
+  z-index: 3;
+  width: 58%;
+  padding: 31px clamp(28px, 4.4vw, 68px);
+}
+
+.qm-home-hero-eyebrow {
+  margin: 0 0 8px;
+  color: var(--qm-home-green);
+  font-size: 12px;
+  letter-spacing: 2.6px;
+  font-weight: 900;
+}
+
+.qm-home-hero h1 {
+  margin: 0;
+  color: var(--qm-home-text);
+  font-size: clamp(37px, 3.7vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -1.8px;
+}
+
+.qm-home-hero-description {
+  margin: 13px 0 20px;
+  color: #30443e;
+  font-size: clamp(15px, 1.25vw, 19px);
+}
+
+.qm-home-shop-button {
+  min-height: 44px;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  border-radius: 8px;
+  color: #fff;
+  background: #007a5e;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 800;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.qm-home-shop-button:hover {
+  background: var(--qm-home-deep);
+  transform: translateY(-1px);
+}
+
+.qm-home-hero-art {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 53%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.qm-home-hero-art::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #fff6e4 0%,
+    rgba(255, 246, 228, 0.38) 24%,
+    rgba(224, 237, 206, 0.02) 65%
+  );
+  pointer-events: none;
+}
+
+.qm-home-hero-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.96;
+}
+
+.qm-home-hero-leaf {
+  position: absolute;
+  z-index: 2;
+  color: #91bc55;
+  font-size: 24px;
+  pointer-events: none;
+}
+
+.qm-home-hero-leaf.leaf-one {
+  top: 15%;
+  right: 44%;
+  transform: rotate(-25deg);
+}
+.qm-home-hero-leaf.leaf-two {
+  bottom: 15%;
+  right: 8%;
+  color: #0d9774;
+  transform: rotate(20deg);
+}
+
+/* Smart basket: four tall product cards visible on desktop, with working arrows. */
+.qm-smart-basket-section {
+  margin-top: 0;
+  scroll-margin-top: 175px;
+}
+
+.qm-smart-basket-heading {
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.qm-smart-basket-heading h2,
+.qm-simple-section-heading h2,
+.qm-showcase-heading h2 {
+  margin: 1px 0 0;
+  color: var(--qm-home-text);
+  font-size: clamp(23px, 2vw, 30px);
+  letter-spacing: -0.7px;
+}
+
+.qm-section-caption {
+  margin: 5px 0 0;
+  color: var(--qm-home-muted);
+  font-size: 13px;
+}
+
+.qm-basket-actions {
+  gap: 9px;
+}
+
+.qm-basket-actions .carousel-button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  font-size: inherit;
+}
+
+.qm-smart-basket-panel {
+  padding: 16px;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #f2f3ef;
+  border: 1px solid #eeefe9;
+}
+
+.qm-smart-basket-scroller {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: #bccbc2 transparent;
+  padding-bottom: 4px;
+}
+
+.qm-smart-basket-scroller .product-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  width: 100%;
+}
+
+.qm-smart-basket-scroller .smart-product-card {
+  flex: 0 0 calc((100% - 42px) / 4);
+  min-width: 225px;
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: start;
+  border-color: #e6e7e2;
+  box-shadow: 0 3px 10px rgba(21, 63, 57, 0.06);
+}
+
+.qm-smart-basket-scroller .smart-product-image-wrapper {
+  height: 218px;
+  margin: 9px 9px 0;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.qm-smart-basket-scroller .smart-product-image {
+  padding: 9px;
+}
+
+.qm-smart-basket-scroller .smart-discount {
+  padding: 7px 10px;
+  font-size: 12px;
+}
+
+.qm-smart-basket-scroller .delivery-badge {
+  right: 6px;
+  bottom: 6px;
+  padding: 6px 8px;
+  font-size: 11px;
+}
+
+.qm-smart-basket-scroller .smart-product-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 12px 13px;
+}
+
+.qm-smart-basket-scroller .smart-product-brand {
+  margin-bottom: 3px;
+  font-size: 12px;
+}
+
+.qm-smart-basket-scroller .smart-product-name {
+  min-height: 38px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  line-height: 1.28;
+}
+
+.qm-smart-basket-scroller .product-unit-selector {
+  height: 35px;
+  margin-bottom: 10px;
+  padding: 0 9px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.qm-smart-basket-scroller .smart-price-row {
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.qm-smart-basket-scroller .smart-price-row strong {
+  font-size: 16px;
+}
+
+.qm-smart-basket-scroller .smart-price-row span {
+  font-size: 11px;
+}
+
+.qm-smart-basket-scroller .smart-product-actions {
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 8px;
+  margin-top: auto;
+}
+
+.qm-smart-basket-scroller .wishlist-button,
+.qm-smart-basket-scroller .smart-add-button,
+.qm-smart-basket-scroller .smart-quantity-control {
+  min-height: 40px;
+  height: 40px;
+  border-radius: 7px;
+}
+
+.qm-smart-basket-scroller .wishlist-button svg {
+  width: 19px;
+  height: 19px;
+}
+
+.qm-smart-basket-scroller .smart-add-button {
+  font-size: 14px;
+}
+
+.qm-smart-basket-scroller .smart-quantity-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.qm-smart-basket-scroller .smart-quantity-value {
+  font-size: 14px;
+}
+
+.qm-catalogue-message {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 25px 18px;
+  color: var(--qm-home-muted);
+  background: #fff;
+}
+
+.qm-catalogue-message p {
+  margin: 0;
+}
+
+.qm-catalogue-message.error {
+  color: #ad2525;
+}
+
+.qm-retry-button {
+  margin-top: 5px;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid #007a5e;
+  border-radius: 8px;
+  color: #007a5e;
+  background: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qm-retry-button:hover {
+  background: #e8f2ec;
+}
+
+.qm-loading-dot {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #d8e6dc;
+  border-top-color: #007a5e;
+  border-radius: 50%;
+  animation: qm-spin 0.8s linear infinite;
+}
+
+@keyframes qm-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Top offers. */
+.qm-top-offers-section {
+  margin-top: 28px;
+}
+
+.qm-simple-section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 13px;
+}
+
+.qm-top-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.qm-top-offer-card {
+  position: relative;
+  min-height: 150px;
+  padding: 17px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  border: 1px solid #e9e7df;
+  border-radius: 12px;
+  text-align: left;
+  color: #172e28;
+  background: #fff;
+  box-shadow: 0 5px 14px rgba(20, 58, 50, 0.07);
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.qm-top-offer-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 74px;
+  background: #e3212b;
+}
+
+.qm-top-offer-card.green::before {
+  background: #087d60;
+}
+.qm-top-offer-card.orange::before {
+  background: #d97722;
+}
+.qm-top-offer-card.dark::before {
+  background: #173f35;
+}
+
+.qm-top-offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(20, 58, 50, 0.12);
+}
+
+.qm-offer-eyebrow {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 17px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+.qm-top-offer-card > strong {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  font-size: 21px;
+  line-height: 1.05;
+  letter-spacing: -0.3px;
+}
+
+.qm-offer-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: #64736c;
+  font-size: 11px;
+}
+
+/* Category showcase rows. */
+.qm-showcase-section {
+  margin-top: 28px;
+}
+
+.qm-showcase-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.qm-showcase-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.qm-view-all {
+  margin-right: 4px;
+  padding: 7px 4px;
+  border: 0;
+  border-bottom: 1px solid #006b52;
+  color: #006b52;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qm-round-arrow {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e2e5df;
+  border-radius: 10px;
+  color: #006b52;
+  background: #fff;
+  cursor: pointer;
+}
+
+.qm-round-arrow:hover,
+.qm-round-arrow.next {
+  background: #e8f2ec;
+}
+
+.qm-showcase-scroller {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+}
+
+.qm-showcase-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.qm-showcase-track {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  padding: 1px 1px 6px;
+}
+
+.qm-showcase-track.four .qm-showcase-card {
+  flex: 0 0 calc((100% - 42px) / 4);
+}
+
+.qm-showcase-track.six .qm-showcase-card {
+  flex: 0 0 calc((100% - 70px) / 6);
+}
+
+.qm-showcase-card {
+  position: relative;
+  min-width: 150px;
+  min-height: 112px;
+  padding: 13px 12px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid #e8e9e2;
+  border-radius: 10px;
+  text-align: left;
+  color: var(--qm-home-text);
+  background: linear-gradient(115deg, #f5f7ee 0%, #eef3e5 58%, #fff8eb 100%);
+  box-shadow: 0 3px 8px rgba(20, 58, 50, 0.07);
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.qm-showcase-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(20, 58, 50, 0.11);
+}
+
+.qm-showcase-copy {
+  position: relative;
+  z-index: 2;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.qm-showcase-title {
+  font-size: 13px;
+  line-height: 1.2;
+  color: #213e36;
+}
+
+.qm-showcase-offer {
+  padding-left: 7px;
+  border-left: 4px solid #e3242b;
+  color: #111c18;
+  font-size: 14px;
+  line-height: 1.15;
+  white-space: normal;
+}
+
+.qm-showcase-image-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 54%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.qm-showcase-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 32%);
+}
+
+.qm-showcase-emoji {
+  font-size: 48px;
+}
+
+.qm-home-footer {
+  margin-top: 14px;
+}
+
+/* Tablet and mobile adjustments. */
+@media (max-width: 1250px) {
+  .qm-promo-shortcuts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .qm-home-main {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .qm-smart-basket-scroller .smart-product-card {
+    flex-basis: calc((100% - 28px) / 3);
+  }
+
+  .qm-showcase-track.six .qm-showcase-card {
+    flex-basis: 190px;
+  }
+}
+
+@media (max-width: 800px) {
+  .quickmart-header {
+    height: auto;
+    min-height: 90px;
+  }
+
+  .quickmart-header-inner {
+    width: calc(100% - 30px);
+    min-height: 90px;
+    flex-wrap: wrap;
+    padding: 11px 0;
+    gap: 12px;
+  }
+
+  .quickmart-logo {
+    font-size: 27px;
+  }
+
+  .quickmart-search {
+    order: 5;
+    flex: 1 0 100%;
+    height: 43px;
+  }
+
+  .delivery-box {
+    display: none;
+  }
+
+  .customer-user-trigger {
+    min-width: auto;
+  }
+
+  .customer-user-text,
+  .customer-user-chevron {
+    display: none;
+  }
+
+  .header-cart-button {
+    width: 43px;
+    height: 43px;
+    flex-basis: 43px;
+  }
+
+  .shop-category-button {
+    min-width: 156px;
+    height: 39px;
+    padding: 0 11px;
+    font-size: 12px;
+  }
+
+  .category-links {
+    gap: 13px;
+  }
+
+  .category-link,
+  .category-more {
+    font-size: 12px;
+    padding: 10px 2px;
+  }
+
+  .qm-home-main {
+    padding: 15px 15px 40px;
+  }
+
+  .qm-promo-shortcuts {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin-bottom: 15px;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .qm-promo-shortcut {
+    flex: 0 0 220px;
+    min-height: 68px;
+  }
+
+  .qm-home-hero {
+    min-height: 265px;
+    margin-bottom: 25px;
+  }
+
+  .qm-home-hero-content {
+    width: 75%;
+    padding: 25px 22px;
+  }
+
+  .qm-home-hero h1 {
+    font-size: clamp(31px, 6.2vw, 42px);
+    letter-spacing: -1px;
+  }
+
+  .qm-home-hero-description {
+    max-width: 290px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .qm-home-hero-art {
+    width: 56%;
+    opacity: 0.62;
+  }
+
+  .qm-smart-basket-heading {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .qm-section-caption {
+    max-width: 230px;
+    line-height: 1.4;
+  }
+
+  .qm-basket-actions .view-all-button {
+    display: none;
+  }
+
+  .qm-basket-actions .carousel-button {
+    width: 35px;
+    height: 35px;
+  }
+
+  .qm-smart-basket-panel {
+    padding: 10px;
+  }
+
+  .qm-smart-basket-scroller .smart-product-card {
+    flex-basis: 78%;
+    min-width: 225px;
+    max-width: 300px;
+  }
+
+  .qm-smart-basket-scroller .smart-product-image-wrapper {
+    height: 205px;
+  }
+
+  .qm-top-offers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .qm-top-offer-card {
+    min-height: 136px;
+    padding: 13px;
+  }
+
+  .qm-top-offer-card::before {
+    height: 66px;
+  }
+
+  .qm-top-offer-card > strong {
+    font-size: 18px;
+  }
+
+  .qm-offer-eyebrow {
+    font-size: 8px;
+    margin-bottom: 14px;
+  }
+
+  .qm-showcase-section {
+    margin-top: 24px;
+  }
+
+  .qm-showcase-heading h2 {
+    font-size: 22px;
+  }
+
+  .qm-showcase-heading-actions {
+    gap: 5px;
+  }
+
+  .qm-view-all {
+    display: none;
+  }
+
+  .qm-round-arrow {
+    width: 31px;
+    height: 31px;
+  }
+
+  .qm-showcase-track.four .qm-showcase-card,
+  .qm-showcase-track.six .qm-showcase-card {
+    flex-basis: 245px;
+    min-height: 104px;
+  }
+
+  .quickmart-footer {
+    padding: 25px 16px;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 430px) {
+  .quickmart-logo {
+    font-size: 24px;
+  }
+
+  .login-header-button {
+    padding: 10px 11px;
+    font-size: 12px;
+  }
+
+  .qm-home-hero {
+    min-height: 250px;
+  }
+
+  .qm-home-hero-content {
+    width: 88%;
+    padding: 22px 17px;
+  }
+
+  .qm-home-hero h1 {
+    font-size: 30px;
+  }
+
+  .qm-home-hero-art {
+    width: 55%;
+    right: -9%;
+    opacity: 0.34;
+  }
+
+  .qm-top-offer-card > strong {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   LOGIN MODAL
+   ========================================================= */
+
+.login-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(10, 25, 20, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: login-modal-fade-in 0.18s ease-out;
+}
+
+.login-modal-dialog {
+  position: relative;
+  width: min(100%, 1050px);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  animation: login-modal-slide-in 0.2s ease-out;
+}
+
+.login-modal-content {
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.login-modal-dialog .login-background-card {
+  width: 100%;
+  max-width: none;
+  min-height: 570px;
+  margin: 0;
+  border-radius: 24px;
+  box-shadow: none;
+}
+
+/* Close button in the upper-right corner */
+.login-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e8e4;
+  border-radius: 50%;
+  color: #16483f;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.login-modal-close:hover {
+  background: #fff8e8;
+  transform: scale(1.05);
+}
+
+.login-modal-close:focus-visible {
+  outline: 3px solid #008166;
+  outline-offset: 3px;
+}
+
+@keyframes login-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes login-modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 760px) {
+  .login-modal-backdrop {
+    padding: 12px;
+  }
+
+  .login-modal-dialog {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    border-radius: 16px;
+  }
+
+  .login-modal-content {
+    max-height: calc(100vh - 24px);
+  }
+
+  .login-modal-dialog .login-background-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 16px;
+  }
+
+  .login-modal-dialog .login-brand-panel {
+    display: none;
+  }
+
+  .login-modal-dialog .login-card {
+    padding: 42px 24px 28px;
+  }
+
+  .login-modal-close {
+    top: 8px;
+    right: 8px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-modal-backdrop,
+  .login-modal-dialog {
+    animation: none;
+  }
+}
+
+/* =========================================
+   CATEGORY DROPDOWN MENUS
+   ========================================= */
+
+.shop-category-menu-wrap,
+.category-more-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.shop-category-menu-wrap {
+  z-index: 20;
+}
+
+.category-more-wrap {
+  z-index: 19;
+  align-self: center;
+}
+
+/* Rotate the Shop by Category arrow when open. */
+.category-chevron-open {
+  transform: rotate(180deg);
+}
+
+.shop-category-button svg {
+  transition: transform 0.2s ease;
+}
+
+/* Shared dropdown styling. */
+.category-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 3000;
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  max-height: min(420px, 65vh);
+  overflow-y: auto;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #e4e6df;
+  border-radius: 12px;
+  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
+}
+
+/* Align the More menu to the right edge. */
+.category-dropdown-right {
+  right: 0;
+  left: auto;
+}
+
+.category-dropdown-item {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #123b35;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.category-dropdown-item:hover {
+  background: #f0f5ed;
+  color: #006b52;
+}
+
+.category-dropdown-item.active {
+  background: #e8f2ec;
+  color: #005442;
+  font-weight: 700;
+}
+
+/* Keep menus comfortably inside narrow screens. */
+@media (max-width: 800px) {
+  .category-dropdown {
+    width: 250px;
+    max-height: 60vh;
+  }
+
+  .category-dropdown-item {
+    min-height: 40px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   HEADER AND CATEGORY NAVIGATION LAYERS
+   ========================================= */
+
+.qm-sticky-header-shell {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  isolation: isolate;
+  width: 100%;
+  overflow: visible !important;
+}
+
+.quickmart-header {
+  position: relative !important;
+  z-index: 20 !important;
+  overflow: visible !important;
+}
+
+.quickmart-header-inner {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Customer profile and dropdown must be above categories */
+.customer-user-menu {
+  position: relative;
+  z-index: 30 !important;
+}
+
+.customer-user-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 40 !important;
+  width: 205px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--qm-home-border);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(18, 59, 53, 0.18);
+}
+
+.customer-user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 8px;
+  text-align: left;
+  color: var(--qm-home-text);
+  background: transparent;
+  cursor: pointer;
+}
+
+.customer-user-dropdown button:hover {
+  background: var(--qm-home-cream);
+}
+
+/* Category bar stays below the customer dropdown */
+.category-navigation {
+  position: relative !important;
+  z-index: 10 !important;
+  height: 58px;
+  min-height: 58px;
+  background: var(--qm-home-cream);
+  border-bottom: 1px solid #eadfc9;
+  overflow: visible !important;
+}
+
+.category-navigation-inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  width: min(1540px, calc(100% - 88px));
+  height: 58px;
+  min-height: 58px;
+  margin: 0 auto;
+  padding: 7px 0;
+  gap: clamp(12px, 1.6vw, 24px);
+  overflow: visible !important;
+}
+
+.category-links {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Keep More dropdown functional */
+.category-more-wrap {
+  position: relative;
+  z-index: 11;
+}
+
+.category-dropdown,
+.category-dropdown-right {
+  z-index: 10000 !important;
+}
+
+/* Responsive category bar */
+@media (max-width: 800px) {
+  .category-navigation {
+    height: 54px;
+    min-height: 54px;
+  }
+
+  .category-navigation-inner {
+    width: calc(100% - 30px);
+    height: 54px;
+    min-height: 54px;
+    padding: 6px 0;
+    gap: 12px;
+  }
+}
+
+/* Fix: More category dropdown visibility */
+.qm-sticky-header-shell {
+  z-index: 5000 !important;
+  overflow: visible !important;
+}
+
+.category-links {
+  position: relative;
+  overflow: visible !important;
+}
+
+.category-more-wrap {
+  position: relative !important;
+  z-index: 1005 !important;
+  flex: 0 0 auto;
+}
+
+.category-dropdown-right {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 10000 !important;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  min-width: 250px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #e4e6df;
+  border-radius: 12px;
+  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
+}

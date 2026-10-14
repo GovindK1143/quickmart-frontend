@@ -20,6 +20,16 @@ export const getProductById = async (productId) => {
   return response.data;
 };
 
+export const getActiveCategories = async () => {
+  const response = await apiClient.get("/products/categories");
+  return response.data;
+};
+
+export const getFeaturedProducts = async () => {
+  const response = await apiClient.get("/products/featured");
+  return response.data;
+};
+
 export const searchProducts = async (keyword) => {
   const response = await apiClient.get("/products/search", {
     params: {

@@ -1,9 +1,69 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, LockKeyhole, ShieldCheck, Truck } from "lucide-react";
+import {
+  ArrowLeft,
+  LockKeyhole,
+  ShieldCheck,
+  Truck,
+  CheckCircle2,
+} from "lucide-react";
+
 import { useCart } from "../../context/useCart";
 import QuickMartHeader from "../../components/layout/QuickMartHeader";
+
+function getCheckoutError(error) {
+  return (
+    error.response?.data?.message ||
+    error.response?.data?.error ||
+    error.message ||
+    "Unable to place your order. Please try again."
+  );
+}
+
 function Checkout() {
-  const { cart, loading } = useCart();
+  const { cart, loading, placeOrder } = useCart();
+
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
+  const [orderResult, setOrderResult] = useState(null);
+
+  const paymentStatus = String(orderResult?.paymentStatus ?? "").toUpperCase();
+
+  const orderId = orderResult?.orderId ?? orderResult?.id;
+
+  const paymentPending =
+    orderResult !== null &&
+    paymentStatus !== "SUCCESS" &&
+    paymentStatus !== "FAILED";
+
+  const handlePlaceOrder = async () => {
+    if (placingOrder || !cart.items?.length || paymentPending) {
+      return;
+    }
+
+    setPlacingOrder(true);
+    setCheckoutError("");
+    setOrderResult(null);
+
+    try {
+      const response = await placeOrder();
+
+      setOrderResult(response);
+
+      const status = String(response?.paymentStatus ?? "PENDING").toUpperCase();
+
+      if (status === "FAILED") {
+        setCheckoutError(
+          "Payment failed. Your cart has been preserved. " +
+            "You can review your items and try placing a new order.",
+        );
+      }
+    } catch (error) {
+      setCheckoutError(getCheckoutError(error));
+    } finally {
+      setPlacingOrder(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -33,7 +93,41 @@ function Checkout() {
           <p>Review your order before placing it.</p>
         </div>
 
-        {cart.items.length === 0 ? (
+        {orderResult && paymentStatus === "SUCCESS" ? (
+          <div className="cart-empty" role="status">
+            <div className="empty-cart-icon">
+              <CheckCircle2 size={42} />
+            </div>
+
+            <h2>Order placed successfully!</h2>
+
+            {orderId != null && (
+              <p>
+                Your order number is <strong>#{orderId}</strong>.
+              </p>
+            )}
+
+            <p>
+              Payment was successful. You can view your order details and
+              current order status in My Orders.
+            </p>
+
+            <Link to="/orders" className="continue-shopping-button">
+              View My Orders
+            </Link>
+
+            <Link
+              to="/home"
+              className="back-shopping-link"
+              style={{
+                justifyContent: "center",
+                marginTop: "16px",
+              }}
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        ) : cart.items.length === 0 ? (
           <div className="cart-empty">
             <div className="empty-cart-icon">🛒</div>
 
@@ -127,14 +221,75 @@ function Checkout() {
                 <strong>₹{cart.totalAmount}</strong>
               </div>
 
-              <button type="button" className="place-order-button" disabled>
+              {checkoutError && (
+                <p
+                  role="alert"
+                  style={{
+                    color: "#b42318",
+                    fontSize: "13px",
+                    lineHeight: 1.5,
+                    marginTop: "14px",
+                  }}
+                >
+                  {checkoutError}
+                </p>
+              )}
+
+              {paymentPending && (
+                <div
+                  role="status"
+                  style={{
+                    color: "#795500",
+                    background: "#fff8e8",
+                    padding: "12px",
+                    borderRadius: "8px",
+                    marginTop: "14px",
+                    fontSize: "13px",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Your order was submitted, but payment is still pending. Check
+                  My Orders for its current status before attempting another
+                  order.
+                  {orderId != null && (
+                    <p style={{ marginBottom: 0 }}>
+                      Order number: <strong>#{orderId}</strong>
+                    </p>
+                  )}
+                  <Link
+                    to="/orders"
+                    style={{
+                      display: "inline-block",
+                      marginTop: "8px",
+                      color: "#005442",
+                      fontWeight: 700,
+                    }}
+                  >
+                    View My Orders
+                  </Link>
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="place-order-button"
+                onClick={handlePlaceOrder}
+                disabled={
+                  placingOrder || cart.items.length === 0 || paymentPending
+                }
+              >
                 <LockKeyhole size={18} />
-                Place Order
+                {placingOrder
+                  ? "Placing Order..."
+                  : paymentPending
+                    ? "Payment Pending"
+                    : "Place Order"}
               </button>
 
               <p className="checkout-note">
-                Payment and order placement will be implemented in the next
-                checkout phase.
+                {placingOrder
+                  ? "Please wait while we submit your order. Do not refresh this page."
+                  : "Your order and payment status will be confirmed by QuickMart."}
               </p>
             </aside>
           </div>
