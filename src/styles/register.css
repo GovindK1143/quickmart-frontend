@@ -1,0 +1,678 @@
+/* =========================================================
+   QUICKMART REGISTRATION
+   ========================================================= */
+
+.register-page {
+  min-height: calc(100vh - 175px);
+  padding: 42px 24px 64px;
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgba(248, 231, 201, 0.52),
+      transparent 30%
+    ),
+    var(--qm-background);
+}
+
+.register-card {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+  width: min(1120px, 100%);
+  min-height: 720px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(6, 78, 59, 0.08);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(6, 78, 59, 0.11);
+}
+
+/* Left brand panel */
+
+.register-brand-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding: 40px 35px 30px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 95% 22%,
+      rgba(248, 231, 201, 0.16),
+      transparent 35%
+    ),
+    linear-gradient(145deg, #064e3b 0%, #006b52 58%, #005442 100%);
+  color: #fff;
+}
+
+.register-brand-panel::after {
+  position: absolute;
+  right: -105px;
+  bottom: 95px;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(255, 248, 232, 0.13);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.register-brand-logo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 29px;
+  font-weight: 850;
+  letter-spacing: -1.1px;
+}
+
+.register-brand-logo svg {
+  color: #f8e7c9;
+}
+
+.register-brand-copy {
+  position: relative;
+  z-index: 1;
+  margin: 50px 0 35px;
+}
+
+.register-brand-eyebrow {
+  color: #f8e7c9;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.register-brand-copy h1 {
+  margin: 19px 0 20px;
+  font-size: clamp(36px, 4vw, 48px);
+  font-weight: 850;
+  line-height: 1.1;
+  letter-spacing: -1.8px;
+}
+
+.register-brand-copy h1 span {
+  color: #f8e7c9;
+}
+
+.register-brand-copy p {
+  max-width: 330px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.83);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.register-benefit {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.register-benefit-icon {
+  display: grid;
+  flex: 0 0 44px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 248, 232, 0.2);
+  border-radius: 13px;
+  background: rgba(255, 248, 232, 0.1);
+  color: #f8e7c9;
+}
+
+.register-benefit strong,
+.register-benefit small {
+  display: block;
+}
+
+.register-benefit strong {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.register-benefit small {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.register-brand-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 36px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.17);
+  color: rgba(255, 255, 255, 0.77);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.register-brand-footer svg {
+  flex: 0 0 auto;
+  color: #f8e7c9;
+}
+
+/* Right form panel */
+
+.register-form-panel {
+  min-width: 0;
+  padding: 32px 45px 30px;
+  background: #fff;
+}
+
+.register-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #667770;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.register-back-link:hover {
+  color: var(--qm-green);
+}
+
+.register-heading {
+  margin: 30px 0 25px;
+}
+
+.register-eyebrow {
+  margin: 0 0 9px;
+  color: var(--qm-green);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+}
+
+.register-heading h2,
+.register-success h2 {
+  margin: 0;
+  color: var(--qm-text);
+  font-size: clamp(27px, 3vw, 34px);
+  font-weight: 850;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.register-heading > p:last-child {
+  margin: 10px 0 0;
+  color: var(--qm-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.register-alert {
+  margin: 0 0 19px;
+  padding: 12px 14px;
+  border: 1px solid #f2c9c5;
+  border-radius: 10px;
+  background: #fff5f4;
+  color: #a4261d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.register-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px 16px;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+}
+
+.register-field label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #24453c;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.register-optional {
+  color: #8a958f;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.register-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.register-input-icon {
+  position: absolute;
+  left: 13px;
+  flex: 0 0 auto;
+  color: #7f958b;
+  pointer-events: none;
+}
+
+.register-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  height: 47px;
+  padding: 0 42px 0 42px;
+  border: 1px solid #e2e8e2;
+  border-radius: 10px;
+  outline: none;
+  background: #fcfdfb;
+  color: var(--qm-text);
+  font-size: 12px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.register-input-wrap input::placeholder {
+  color: #a0aaa4;
+}
+
+.register-input-wrap input:hover {
+  border-color: #c6d6ca;
+}
+
+.register-input-wrap input:focus {
+  border-color: var(--qm-green);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 107, 82, 0.09);
+}
+
+.register-password-toggle {
+  position: absolute;
+  right: 9px;
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 31px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #71847b;
+  cursor: pointer;
+}
+
+.register-password-toggle:hover {
+  background: var(--qm-green-light);
+  color: var(--qm-green);
+}
+
+.register-field-hint {
+  margin-top: -1px;
+  color: #84918a;
+  font-size: 10px;
+}
+
+.register-privacy-note {
+  margin: 0;
+  color: #7b8881;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.register-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 49px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #006b52, #064e3b);
+  box-shadow: 0 8px 17px rgba(6, 78, 59, 0.15);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.register-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 23px rgba(6, 78, 59, 0.2);
+}
+
+.register-submit:focus-visible {
+  outline: 3px solid rgba(0, 107, 82, 0.25);
+  outline-offset: 3px;
+}
+
+.register-submit:disabled {
+  opacity: 0.68;
+  cursor: wait;
+}
+
+.register-submit-arrow {
+  transform: rotate(180deg);
+}
+
+.register-spinner {
+  animation: register-spin 1s linear infinite;
+}
+
+@keyframes register-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.register-switch-copy {
+  margin: 21px 0 0;
+  color: #75827b;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.register-switch-copy a {
+  color: var(--qm-green);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.register-switch-copy a:hover {
+  text-decoration: underline;
+}
+
+.register-bottom-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 21px 0 0;
+  color: #89948e;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.register-bottom-note svg {
+  flex: 0 0 auto;
+  color: var(--qm-green);
+}
+
+/* Account created successfully */
+
+.register-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 575px;
+  text-align: center;
+}
+
+.register-success-icon {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  margin-bottom: 28px;
+  border-radius: 24px;
+  background: var(--qm-green-light);
+  color: var(--qm-green);
+}
+
+.register-success h2 {
+  margin-top: 4px;
+}
+
+.register-success-copy {
+  max-width: 390px;
+  margin: 18px 0 27px;
+  color: #718078;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.register-success .register-submit {
+  max-width: 340px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .register-page {
+    padding: 28px 18px 45px;
+  }
+
+  .register-card {
+    grid-template-columns: minmax(245px, 0.75fr) minmax(0, 1.25fr);
+  }
+
+  .register-brand-panel {
+    padding: 32px 24px 25px;
+  }
+
+  .register-brand-logo {
+    font-size: 25px;
+  }
+
+  .register-brand-copy h1 {
+    font-size: 36px;
+  }
+
+  .register-form-panel {
+    padding: 29px 27px;
+  }
+
+  .register-form-grid {
+    gap: 15px 12px;
+  }
+}
+
+@media (max-width: 680px) {
+  .register-page {
+    padding: 20px 12px 35px;
+  }
+
+  .register-card {
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 18px;
+  }
+
+  .register-brand-panel {
+    min-height: auto;
+    padding: 25px 23px;
+  }
+
+  .register-brand-copy {
+    margin: 28px 0 18px;
+  }
+
+  .register-brand-copy h1 {
+    margin: 12px 0;
+    font-size: 34px;
+  }
+
+  .register-brand-copy p {
+    max-width: 460px;
+    font-size: 13px;
+  }
+
+  .register-benefit {
+    margin-top: 12px;
+  }
+
+  .register-brand-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+  }
+
+  .register-form-panel {
+    padding: 25px 21px 26px;
+  }
+
+  .register-heading {
+    margin: 24px 0 22px;
+  }
+
+  .register-heading h2 {
+    font-size: 29px;
+  }
+
+  .register-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .register-success {
+    min-height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-spinner {
+    animation: none;
+  }
+
+  .register-submit {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   REGISTRATION POPUP
+   Reuses the Login modal overlay and close-button styles.
+   ========================================================= */
+
+.register-modal-dialog {
+  width: min(100%, 1120px);
+  animation: register-popup-switch-in 0.22s ease-out;
+}
+
+.register-modal-content .register-page {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.register-modal-content .register-card {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  border-radius: 24px;
+  box-shadow: none;
+}
+
+/* Button-style Log in action on Registration. */
+.register-switch-copy a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  margin-left: 5px;
+  padding: 5px 12px;
+  border: 1px solid #e5dfce;
+  border-radius: 8px;
+  background: var(--qm-cream);
+  color: var(--qm-green-deep);
+  text-decoration: none;
+  font-weight: 800;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.register-switch-copy a:hover {
+  background: var(--qm-green);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.register-switch-copy a:focus-visible {
+  outline: 3px solid rgba(0, 107, 82, 0.25);
+  outline-offset: 3px;
+}
+
+/* Subtle entrance when switching from Login to Registration. */
+@keyframes register-popup-switch-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (max-width: 680px) {
+  .register-modal-dialog {
+    max-height: calc(100vh - 24px);
+    border-radius: 16px;
+  }
+
+  .register-modal-content {
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+  }
+
+  .register-modal-content .register-page {
+    padding: 0;
+  }
+
+  .register-modal-content .register-card {
+    grid-template-columns: minmax(0, 1fr);
+    border-radius: 16px;
+  }
+
+  .register-modal-content .register-brand-panel {
+    display: none;
+  }
+
+  .register-modal-content .register-form-panel {
+    padding: 45px 21px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .register-modal-dialog {
+    animation: none;
+  }
+
+  .login-footer .register-link-button,
+  .register-switch-copy a {
+    transition: none;
+  }
+}

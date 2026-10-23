@@ -15,63 +15,106 @@ html {
   scroll-padding-top: 175px;
 }
 
-/* Keep the complete two-row header together at the top. */
+/* Shared sticky two-row customer header. Keep this as the single source of truth. */
 .qm-sticky-header-shell {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 5000;
   isolation: isolate;
   width: 100%;
+  overflow: visible;
   box-shadow: 0 5px 16px rgba(18, 59, 53, 0.08);
 }
 
 .quickmart-header {
   position: relative !important;
-  z-index: 1;
+  z-index: 20 !important;
+  width: 100%;
   height: 78px;
   min-height: 78px;
+  overflow: visible !important;
   background: var(--qm-home-deep);
+  color: #fff;
 }
 
 .quickmart-header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
   width: min(1540px, calc(100% - 88px));
+  height: 78px;
   min-height: 78px;
   margin: 0 auto;
   padding: 10px 0;
   gap: clamp(14px, 2vw, 28px);
+  overflow: visible !important;
 }
 
 .quickmart-logo {
+  flex: 0 0 auto;
+  color: #fff;
+  text-decoration: none;
   font-size: clamp(27px, 2.35vw, 36px);
+  font-weight: 800;
   letter-spacing: -1.4px;
+  white-space: nowrap;
 }
 
 .quickmart-search {
-  height: 50px;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 12px;
   min-width: 160px;
   max-width: none;
+  height: 50px;
+  padding: 0 18px;
   border-radius: 11px;
+  background: #fff;
+  color: #45615a;
 }
 
 .quickmart-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #173f36;
   font-size: 15px;
 }
 
+.quickmart-search input::placeholder {
+  color: #9ba8a5;
+}
+
 .delivery-box {
+  display: flex;
   flex: 0 1 250px;
+  align-items: center;
+  gap: 10px;
   min-width: 205px;
   height: 50px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 12px;
   background: transparent;
   color: #fff;
   text-align: left;
   cursor: pointer;
 }
 
-.qm-delivery-copy {
-  flex: 1;
+.delivery-icon {
   display: flex;
+  align-items: center;
+  color: #ffe7a1;
+}
+
+.qm-delivery-copy {
+  display: flex;
+  flex: 1;
   flex-direction: column;
   text-align: left;
+  line-height: 1.2;
 }
 
 .qm-delivery-copy strong {
@@ -85,46 +128,54 @@ html {
   opacity: 0.9;
 }
 
-.delivery-icon {
-  color: #ffe7a1;
-}
-
 .login-header-button {
+  display: flex;
   flex: 0 0 auto;
-  padding: 13px 19px;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 22px;
   border-radius: 10px;
-  color: var(--qm-home-deep);
   background: var(--qm-home-cream);
+  color: var(--qm-home-deep);
+  text-decoration: none;
   font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .customer-user-menu {
   position: relative;
+  z-index: 30 !important;
   flex: 0 0 auto;
-  z-index: 10;
 }
 
 .customer-user-trigger {
-  min-width: 145px;
-  border: 0;
-  padding: 5px 0;
   display: flex;
   align-items: center;
   gap: 9px;
-  color: #fff;
+  min-width: 145px;
+  padding: 5px 0;
+  border: 0;
+  border-radius: 10px;
   background: transparent;
+  color: #fff;
   cursor: pointer;
 }
 
+.customer-user-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .qm-user-avatar {
+  display: grid;
+  flex: 0 0 38px;
+  place-items: center;
   width: 38px;
   height: 38px;
-  flex: 0 0 38px;
-  display: grid;
-  place-items: center;
   border-radius: 50%;
-  color: var(--qm-home-deep);
   background: var(--qm-home-cream);
+  color: var(--qm-home-deep);
   font-weight: 800;
 }
 
@@ -151,48 +202,235 @@ html {
   transform: rotate(180deg);
 }
 
+.customer-user-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 40 !important;
+  width: 205px;
+  padding: 8px;
+  border: 1px solid var(--qm-home-border);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(18, 59, 53, 0.18);
+}
+
+.customer-user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--qm-home-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.customer-user-dropdown button:hover {
+  background: var(--qm-home-cream);
+}
+
+.customer-user-dropdown .customer-logout-button {
+  color: var(--qm-home-deep);
+  font-weight: 700;
+}
+
 .header-cart-button {
+  position: relative;
+  display: flex;
   flex: 0 0 52px;
+  align-items: center;
+  justify-content: center;
   width: 52px;
   height: 52px;
-  background: var(--qm-home-cream);
   border-radius: 11px;
+  background: var(--qm-home-cream);
+  color: var(--qm-home-deep);
+  text-decoration: none;
 }
 
 .header-cart-count {
+  position: absolute;
   top: -6px;
   right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 23px;
   height: 23px;
-  font-size: 12px;
+  padding: 0 5px;
+  border: 2px solid var(--qm-home-deep);
+  border-radius: 50%;
   background: #e3262e;
-  border-color: var(--qm-home-deep);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* Category navigation is part of the same sticky header stack. */
+.category-navigation {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100%;
+  height: 58px;
+  min-height: 58px;
+  overflow: visible !important;
+  border-bottom: 1px solid #eadfc9;
+  background: var(--qm-home-cream);
+}
+
+.category-navigation-inner {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  width: min(1540px, calc(100% - 88px));
+  height: 58px;
+  min-height: 58px;
+  margin: 0 auto;
+  padding: 7px 0;
+  gap: clamp(12px, 1.6vw, 24px);
+  overflow: visible !important;
 }
 
 .shop-category-button {
-  height: 42px;
-  min-width: 190px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  min-width: 190px;
+  height: 42px;
   padding: 0 16px;
+  border: 0;
   border-radius: 9px;
   background: #008166;
+  color: #fff;
   font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .category-links {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
   gap: clamp(10px, 1.3vw, 22px);
+  overflow: visible !important;
+}
+
+.category-links::-webkit-scrollbar {
+  display: none;
 }
 
 .category-link,
 .category-more {
+  position: relative;
+  display: flex;
   flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
   padding: 12px 5px;
+  border: 0;
+  background: transparent;
+  color: #263a36;
   font-size: 14px;
+  cursor: pointer;
   white-space: nowrap;
 }
 
+.category-link:hover,
+.category-more:hover,
+.category-link.active {
+  color: #007a5e;
+  font-weight: 700;
+}
+
 .category-link.active::after {
+  content: "";
+  position: absolute;
+  right: 5px;
   bottom: 1px;
+  left: 5px;
+  height: 3px;
+  border-radius: 3px;
+  background: #007a5e;
+}
+
+.shop-category-menu-wrap,
+.category-more-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.shop-category-menu-wrap {
+  z-index: 20;
+}
+
+.category-more-wrap {
+  z-index: 1005 !important;
+}
+
+.category-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 10000 !important;
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  max-height: min(420px, 65vh);
+  overflow-y: auto;
+  padding: 8px;
+  border: 1px solid #e4e6df;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
+}
+
+.category-dropdown-right {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 10000 !important;
+  display: block;
+  visibility: visible;
+  min-width: 250px;
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 1px solid #e4e6df;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
+}
+
+.category-dropdown-item {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #123b35;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.category-dropdown-item:hover {
+  background: #f0f5ed;
+  color: #006b52;
+}
+
+.category-dropdown-item.active {
+  background: #e8f2ec;
+  color: #005442;
+  font-weight: 700;
 }
 
 /* Page layout and promotional shortcuts. */
@@ -882,6 +1120,20 @@ html {
 
 /* Tablet and mobile adjustments. */
 @media (max-width: 1250px) {
+  .quickmart-header-inner,
+  .category-navigation-inner {
+    width: min(1540px, calc(100% - 56px));
+  }
+
+  .quickmart-logo {
+    font-size: 31px;
+  }
+
+  .delivery-box {
+    flex-basis: 210px;
+    min-width: 190px;
+  }
+
   .qm-promo-shortcuts {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -900,6 +1152,23 @@ html {
   }
 }
 
+/* Intermediate-width header layout. */
+@media (max-width: 950px) {
+  .quickmart-header-inner {
+    flex-wrap: wrap;
+  }
+
+  .quickmart-search {
+    order: 5;
+    flex-basis: 100%;
+    max-width: none;
+  }
+
+  .delivery-box {
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 800px) {
   .quickmart-header {
     height: auto;
@@ -908,6 +1177,7 @@ html {
 
   .quickmart-header-inner {
     width: calc(100% - 30px);
+    height: auto;
     min-height: 90px;
     flex-wrap: wrap;
     padding: 11px 0;
@@ -922,6 +1192,7 @@ html {
     order: 5;
     flex: 1 0 100%;
     height: 43px;
+    max-width: none;
   }
 
   .delivery-box {
@@ -950,6 +1221,19 @@ html {
     font-size: 12px;
   }
 
+  .category-navigation {
+    height: 54px;
+    min-height: 54px;
+  }
+
+  .category-navigation-inner {
+    width: calc(100% - 30px);
+    height: 54px;
+    min-height: 54px;
+    padding: 6px 0;
+    gap: 12px;
+  }
+
   .category-links {
     gap: 13px;
   }
@@ -958,6 +1242,16 @@ html {
   .category-more {
     font-size: 12px;
     padding: 10px 2px;
+  }
+
+  .category-dropdown {
+    width: 250px;
+    max-height: 60vh;
+  }
+
+  .category-dropdown-item {
+    min-height: 40px;
+    font-size: 13px;
   }
 
   .qm-home-main {
@@ -1127,388 +1421,4 @@ html {
   .qm-top-offer-card > strong {
     font-size: 16px;
   }
-}
-
-/* =========================================================
-   LOGIN MODAL
-   ========================================================= */
-
-.login-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 3000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  overflow-y: auto;
-  background: rgba(10, 25, 20, 0.62);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  animation: login-modal-fade-in 0.18s ease-out;
-}
-
-.login-modal-dialog {
-  position: relative;
-  width: min(100%, 1050px);
-  max-height: calc(100vh - 48px);
-  overflow: hidden;
-  border-radius: 24px;
-  background: #ffffff;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
-  animation: login-modal-slide-in 0.2s ease-out;
-}
-
-.login-modal-content {
-  max-height: calc(100vh - 48px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.login-modal-dialog .login-background-card {
-  width: 100%;
-  max-width: none;
-  min-height: 570px;
-  margin: 0;
-  border-radius: 24px;
-  box-shadow: none;
-}
-
-/* Close button in the upper-right corner */
-.login-modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  z-index: 5;
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #e5e8e4;
-  border-radius: 50%;
-  color: #16483f;
-  background: #ffffff;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition:
-    background 0.18s ease,
-    transform 0.18s ease;
-}
-
-.login-modal-close:hover {
-  background: #fff8e8;
-  transform: scale(1.05);
-}
-
-.login-modal-close:focus-visible {
-  outline: 3px solid #008166;
-  outline-offset: 3px;
-}
-
-@keyframes login-modal-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes login-modal-slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.99);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Mobile layout */
-@media (max-width: 760px) {
-  .login-modal-backdrop {
-    padding: 12px;
-  }
-
-  .login-modal-dialog {
-    width: 100%;
-    max-height: calc(100vh - 24px);
-    border-radius: 16px;
-  }
-
-  .login-modal-content {
-    max-height: calc(100vh - 24px);
-  }
-
-  .login-modal-dialog .login-background-card {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    border-radius: 16px;
-  }
-
-  .login-modal-dialog .login-brand-panel {
-    display: none;
-  }
-
-  .login-modal-dialog .login-card {
-    padding: 42px 24px 28px;
-  }
-
-  .login-modal-close {
-    top: 8px;
-    right: 8px;
-    width: 38px;
-    height: 38px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .login-modal-backdrop,
-  .login-modal-dialog {
-    animation: none;
-  }
-}
-
-/* =========================================
-   CATEGORY DROPDOWN MENUS
-   ========================================= */
-
-.shop-category-menu-wrap,
-.category-more-wrap {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.shop-category-menu-wrap {
-  z-index: 20;
-}
-
-.category-more-wrap {
-  z-index: 19;
-  align-self: center;
-}
-
-/* Rotate the Shop by Category arrow when open. */
-.category-chevron-open {
-  transform: rotate(180deg);
-}
-
-.shop-category-button svg {
-  transition: transform 0.2s ease;
-}
-
-/* Shared dropdown styling. */
-.category-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  z-index: 3000;
-  width: 280px;
-  max-width: calc(100vw - 32px);
-  max-height: min(420px, 65vh);
-  overflow-y: auto;
-  padding: 8px;
-  background: #ffffff;
-  border: 1px solid #e4e6df;
-  border-radius: 12px;
-  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
-}
-
-/* Align the More menu to the right edge. */
-.category-dropdown-right {
-  right: 0;
-  left: auto;
-}
-
-.category-dropdown-item {
-  display: block;
-  width: 100%;
-  min-height: 42px;
-  padding: 10px 12px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: #123b35;
-  text-align: left;
-  font-size: 14px;
-  line-height: 1.4;
-  cursor: pointer;
-}
-
-.category-dropdown-item:hover {
-  background: #f0f5ed;
-  color: #006b52;
-}
-
-.category-dropdown-item.active {
-  background: #e8f2ec;
-  color: #005442;
-  font-weight: 700;
-}
-
-/* Keep menus comfortably inside narrow screens. */
-@media (max-width: 800px) {
-  .category-dropdown {
-    width: 250px;
-    max-height: 60vh;
-  }
-
-  .category-dropdown-item {
-    min-height: 40px;
-    font-size: 13px;
-  }
-}
-
-/* =========================================
-   HEADER AND CATEGORY NAVIGATION LAYERS
-   ========================================= */
-
-.qm-sticky-header-shell {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  isolation: isolate;
-  width: 100%;
-  overflow: visible !important;
-}
-
-.quickmart-header {
-  position: relative !important;
-  z-index: 20 !important;
-  overflow: visible !important;
-}
-
-.quickmart-header-inner {
-  position: relative;
-  overflow: visible !important;
-}
-
-/* Customer profile and dropdown must be above categories */
-.customer-user-menu {
-  position: relative;
-  z-index: 30 !important;
-}
-
-.customer-user-dropdown {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  z-index: 40 !important;
-  width: 205px;
-  padding: 8px;
-  background: #fff;
-  border: 1px solid var(--qm-home-border);
-  border-radius: 12px;
-  box-shadow: 0 14px 34px rgba(18, 59, 53, 0.18);
-}
-
-.customer-user-dropdown button {
-  display: block;
-  width: 100%;
-  padding: 11px 12px;
-  border: 0;
-  border-radius: 8px;
-  text-align: left;
-  color: var(--qm-home-text);
-  background: transparent;
-  cursor: pointer;
-}
-
-.customer-user-dropdown button:hover {
-  background: var(--qm-home-cream);
-}
-
-/* Category bar stays below the customer dropdown */
-.category-navigation {
-  position: relative !important;
-  z-index: 10 !important;
-  height: 58px;
-  min-height: 58px;
-  background: var(--qm-home-cream);
-  border-bottom: 1px solid #eadfc9;
-  overflow: visible !important;
-}
-
-.category-navigation-inner {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  width: min(1540px, calc(100% - 88px));
-  height: 58px;
-  min-height: 58px;
-  margin: 0 auto;
-  padding: 7px 0;
-  gap: clamp(12px, 1.6vw, 24px);
-  overflow: visible !important;
-}
-
-.category-links {
-  position: relative;
-  overflow: visible !important;
-}
-
-/* Keep More dropdown functional */
-.category-more-wrap {
-  position: relative;
-  z-index: 11;
-}
-
-.category-dropdown,
-.category-dropdown-right {
-  z-index: 10000 !important;
-}
-
-/* Responsive category bar */
-@media (max-width: 800px) {
-  .category-navigation {
-    height: 54px;
-    min-height: 54px;
-  }
-
-  .category-navigation-inner {
-    width: calc(100% - 30px);
-    height: 54px;
-    min-height: 54px;
-    padding: 6px 0;
-    gap: 12px;
-  }
-}
-
-/* Fix: More category dropdown visibility */
-.qm-sticky-header-shell {
-  z-index: 5000 !important;
-  overflow: visible !important;
-}
-
-.category-links {
-  position: relative;
-  overflow: visible !important;
-}
-
-.category-more-wrap {
-  position: relative !important;
-  z-index: 1005 !important;
-  flex: 0 0 auto;
-}
-
-.category-dropdown-right {
-  position: absolute !important;
-  top: calc(100% + 8px) !important;
-  right: 0 !important;
-  left: auto !important;
-  z-index: 10000 !important;
-  display: block;
-  visibility: visible;
-  opacity: 1;
-  min-width: 250px;
-  max-height: 60vh;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #e4e6df;
-  border-radius: 12px;
-  box-shadow: 0 14px 35px rgba(18, 59, 53, 0.18);
 }

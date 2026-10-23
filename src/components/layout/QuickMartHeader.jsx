@@ -6,6 +6,7 @@ import {
   ShoppingCart,
   ChevronDown,
   ChevronRight,
+  UserRoundPen,
 } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
 import { useCart } from "../../context/useCart";
@@ -90,8 +91,11 @@ function QuickMartHeader({
 
   const handleLogout = () => {
     setUserMenuOpen(false);
-    logout();
+    // Navigate away from protected pages first.
     navigate("/home", { replace: true });
+
+    // Clear the authentication state.
+    logout();
   };
 
   const handleCategory = (category) => {
@@ -154,6 +158,7 @@ function QuickMartHeader({
                 className="customer-user-trigger"
                 onClick={() => setUserMenuOpen((previous) => !previous)}
                 aria-expanded={userMenuOpen}
+                aria-haspopup="menu"
               >
                 <span className="qm-user-avatar" aria-hidden="true">
                   {(user.name?.trim()?.[0] || "C").toUpperCase()}
@@ -173,9 +178,10 @@ function QuickMartHeader({
               </button>
 
               {userMenuOpen && (
-                <div className="customer-user-dropdown">
+                <div className="customer-user-dropdown" role="menu">
                   <button
                     type="button"
+                    role="menuitem"
                     onClick={() => {
                       setUserMenuOpen(false);
                       navigate("/home");
@@ -185,6 +191,19 @@ function QuickMartHeader({
                   </button>
                   <button
                     type="button"
+                    role="menuitem"
+                    className={location.pathname === "/profile" ? "active" : ""}
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    <UserRoundPen size={16} aria-hidden="true" />
+                    My Profile
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
                     onClick={() => {
                       setUserMenuOpen(false);
                       navigate("/orders");
@@ -194,6 +213,7 @@ function QuickMartHeader({
                   </button>
                   <button
                     type="button"
+                    role="menuitem"
                     className="customer-logout-button"
                     onClick={handleLogout}
                   >

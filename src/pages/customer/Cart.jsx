@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import QuickMartHeader from "../../components/layout/QuickMartHeader";
 import { ArrowLeft, ShieldCheck, Truck } from "lucide-react";
 import CartItem from "../../components/cart/CartItem";
@@ -8,6 +8,7 @@ import { useCart } from "../../context/useCart";
 
 function Cart() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, loading: authLoading } = useAuth();
 
   const { cart, loading, error, updateItem, removeItem, clearCart } = useCart();
@@ -36,6 +37,7 @@ function Cart() {
 
     navigate("/login", {
       state: {
+        backgroundLocation: location,
         from: {
           pathname: "/checkout",
         },

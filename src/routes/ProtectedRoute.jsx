@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 
 function ProtectedRoute({ allowedRoles }) {
-  const { user, loading } = useAuth();
+  const { user, loading, logoutInProgress } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -14,6 +14,12 @@ function ProtectedRoute({ allowedRoles }) {
   }
 
   if (!user) {
+    // Logging out should always lead to the homepage.
+    if (logoutInProgress) {
+      return <Navigate to="/home" replace />;
+    }
+
+    // Preserve existing behavior for other unauthenticated visits.
     return (
       <Navigate
         to="/login"

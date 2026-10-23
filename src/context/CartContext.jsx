@@ -293,49 +293,56 @@ export function CartProvider({ children }) {
     }
   };
 
-  const placeOrder = async () => {
+  const placeOrder = async (addressId) => {
     setError("");
 
+    // Only customer accounts can place orders.
     if (user?.role !== "CUSTOMER") {
       const requestError = new Error(
         "Please log in with a customer account to place an order.",
       );
+
+      setError(requestError.message);
+      throw requestError;
+    }
+
+    // A valid saved delivery address is required.
+    if (!Number.isInteger(Number(addressId)) || Number(addressId) <= 0) {
+      const requestError = new Error(
+        "Please select a delivery address before placing the order.",
+      );
+
       setError(requestError.message);
       throw requestError;
     }
 
     try {
-      // Submit the existing server-side cart for checkout.
-      const orderResponse = await checkoutCart();
+      // Submit the existing server-side cart with the selected address.
+      const orderResponse = await checkoutCart(Number(addressId));
 
       const paymentStatus = String(
         orderResponse?.paymentStatus ?? "PENDING",
       ).toUpperCase();
 
       if (paymentStatus === "SUCCESS") {
-        // The backend clears the cart after successful payment.
+        // Preserve the existing successful-payment cart behavior.
         setCart(emptyCart);
 
-        // Synchronize with the server's current cart state.
         try {
           const latestCart = await getCart();
           setCart(latestCart);
         } catch (refreshError) {
-          // The order succeeded, so don't report it as a failed order
-          // solely because refreshing the cart failed.
           console.error(
             "Order succeeded, but refreshing the cart failed:",
             refreshError,
           );
         }
       } else {
-        // For FAILED, PENDING, or unknown status, refresh the cart
-        // because the backend preserves its items in these cases.
+        // Keep cart items for pending, failed or unknown payment status.
         try {
           const latestCart = await getCart();
           setCart(latestCart);
         } catch (refreshError) {
-          // Retain the current cart if the refresh request fails.
           console.error("Unable to refresh cart after checkout:", refreshError);
         }
       }

@@ -1,0 +1,420 @@
+/* =========================================================
+   QUICKMART LOGIN PAGE AND MODAL
+   Loaded by Login.jsx; modal styles are kept separate from shared header styles.
+   ========================================================= */
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+.login-page {
+  min-height: calc(100vh - 160px);
+  padding: 55px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(248, 231, 201, 0.8),
+      transparent 35%
+    ),
+    var(--qm-background);
+}
+
+.login-background-card {
+  width: min(100%, 1050px);
+  min-height: 570px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(6, 78, 59, 0.12);
+}
+
+.login-brand-panel {
+  background: linear-gradient(145deg, var(--qm-green-deep), var(--qm-green));
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-brand-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: var(--qm-cream);
+  color: var(--qm-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.login-eyebrow,
+.login-small-title {
+  font-size: 12px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.login-eyebrow {
+  color: var(--qm-champagne);
+}
+
+.login-brand-panel h1 {
+  font-size: 42px;
+  line-height: 1.08;
+  margin: 10px 0 20px;
+}
+
+.login-brand-panel > p:not(.login-eyebrow) {
+  max-width: 420px;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.login-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
+.login-feature span:first-child {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--qm-champagne);
+  color: var(--qm-green-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  padding: 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-header {
+  margin-bottom: 30px;
+}
+
+.login-header h2 {
+  color: var(--qm-text);
+  font-size: 30px;
+  margin: 7px 0;
+}
+
+.login-header > p:last-child {
+  color: var(--qm-muted);
+  margin: 0;
+}
+
+.login-small-title {
+  color: var(--qm-green);
+  margin: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.login-input-wrapper {
+  height: 52px;
+  border: 1px solid var(--qm-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  color: var(--qm-green);
+  background: #fff;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.login-input-wrapper:focus-within {
+  border-color: var(--qm-green);
+  box-shadow: 0 0 0 3px rgba(0, 107, 82, 0.1);
+}
+
+.login-input-wrapper input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+  background: transparent;
+}
+
+.login-submit-button {
+  height: 52px;
+  border: none;
+  border-radius: 10px;
+  background: var(--qm-green);
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.login-submit-button:hover {
+  background: var(--qm-green-dark);
+}
+
+.login-submit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.login-error {
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #fff0ee;
+  color: #b42318;
+  font-size: 14px;
+}
+
+.login-footer {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--qm-border);
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  color: var(--qm-muted);
+  font-size: 14px;
+}
+
+.register-link {
+  border: none;
+  background: transparent;
+  color: var(--qm-green);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .login-background-card {
+    grid-template-columns: 1fr;
+  }
+
+  .login-brand-panel {
+    padding: 40px;
+  }
+
+  .login-card {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 700px) {
+  .login-page {
+    padding: 25px 15px;
+  }
+
+  .login-brand-panel {
+    padding: 30px;
+  }
+
+  .login-brand-panel h1 {
+    font-size: 32px;
+  }
+
+  .login-card {
+    padding: 30px 22px;
+  }
+}
+
+/* =========================================================
+   LOGIN MODAL
+   ========================================================= */
+
+.login-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(10, 25, 20, 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: login-modal-fade-in 0.18s ease-out;
+}
+
+.login-modal-dialog {
+  position: relative;
+  width: min(100%, 1050px);
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  animation: login-modal-slide-in 0.2s ease-out;
+}
+
+.login-modal-content {
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.login-modal-dialog .login-background-card {
+  width: 100%;
+  max-width: none;
+  min-height: 570px;
+  margin: 0;
+  border-radius: 24px;
+  box-shadow: none;
+}
+
+/* Close button in the upper-right corner */
+.login-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e8e4;
+  border-radius: 50%;
+  color: #16483f;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.login-modal-close:hover {
+  background: #fff8e8;
+  transform: scale(1.05);
+}
+
+.login-modal-close:focus-visible {
+  outline: 3px solid #008166;
+  outline-offset: 3px;
+}
+
+@keyframes login-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes login-modal-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 760px) {
+  .login-modal-backdrop {
+    padding: 12px;
+  }
+
+  .login-modal-dialog {
+    width: 100%;
+    max-height: calc(100vh - 24px);
+    border-radius: 16px;
+  }
+
+  .login-modal-content {
+    max-height: calc(100vh - 24px);
+  }
+
+  .login-modal-dialog .login-background-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 16px;
+  }
+
+  .login-modal-dialog .login-brand-panel {
+    display: none;
+  }
+
+  .login-modal-dialog .login-card {
+    padding: 42px 24px 28px;
+  }
+
+  .login-modal-close {
+    top: 8px;
+    right: 8px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-modal-backdrop,
+  .login-modal-dialog {
+    animation: none;
+  }
+}
+
+/* Registration link styled as a button in the Login popup. */
+.login-footer {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.login-footer .register-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 14px;
+  border: 1px solid #e5dfce;
+  border-radius: 9px;
+  background: var(--qm-cream);
+  color: var(--qm-green-deep);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.login-footer .register-link-button:hover {
+  background: var(--qm-green);
+  color: #fff;
+  box-shadow: 0 5px 12px rgba(6, 78, 59, 0.15);
+  transform: translateY(-1px);
+}
+
+.login-footer .register-link-button:focus-visible {
+  outline: 3px solid rgba(0, 107, 82, 0.25);
+  outline-offset: 3px;
+}

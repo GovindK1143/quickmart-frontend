@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LockKeyhole, Mail, ShoppingBasket, X } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
+import "../../styles/login.css";
 
 function Login({ isModal = false, onClose }) {
   const navigate = useNavigate();
@@ -179,13 +180,20 @@ function Login({ isModal = false, onClose }) {
         <div className="login-footer">
           <span>Don't have an account?</span>
 
-          <button
-            type="button"
-            className="register-link"
-            onClick={() => navigate("/register")}
+          <Link
+            to="/register"
+            className="register-link register-link-button"
+            state={
+              isModal && location.state?.backgroundLocation
+                ? {
+                    backgroundLocation: location.state.backgroundLocation,
+                    authModalTransition: true,
+                  }
+                : undefined
+            }
           >
             Create an account
-          </button>
+          </Link>
         </div>
       </div>
     </div>

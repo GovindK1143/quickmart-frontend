@@ -6,6 +6,7 @@ import { AuthContext } from "./authContextValue";
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => storage.getUser());
   const [loading, setLoading] = useState(true);
+  const [logoutInProgress, setLogoutInProgress] = useState(false);
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -52,22 +53,42 @@ export function AuthProvider({ children }) {
     };
 
     storage.setUser(loggedInUser);
+    setLogoutInProgress(false);
     setUser(loggedInUser);
 
     return loggedInUser;
   };
 
   const logout = () => {
+    setLogoutInProgress(true);
     storage.clear();
     setUser(null);
+  };
+
+  const updateUser = (updates) => {
+    if (!user) {
+      return null;
+    }
+
+    const updatedUser = {
+      ...user,
+      ...updates,
+    };
+
+    storage.setUser(updatedUser);
+    setUser(updatedUser);
+
+    return updatedUser;
   };
 
   const value = {
     user,
     loading,
+    logoutInProgress,
     isAuthenticated: Boolean(user && storage.getToken()),
     login,
     logout,
+    updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

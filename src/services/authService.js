@@ -14,3 +14,18 @@ export const getCurrentUser = async () => {
 
   return response.data;
 };
+
+export async function registerUser(registrationData) {
+  const response = await apiClient.post("/auth/register", registrationData);
+
+  return response.data;
+}
+
+export const changePassword = async ({ currentPassword, newPassword }) => {
+  const response = await apiClient.post("/auth/change-password", {
+    currentPassword,
+    newPassword,
+  });
+
+  return response.data;
+};
