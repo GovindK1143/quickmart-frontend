@@ -1,21 +1,16 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
+
 import Home from "../pages/customer/Home";
 import Cart from "../pages/customer/Cart";
 import Checkout from "../pages/customer/Checkout";
 import Orders from "../pages/customer/Orders";
 import Profile from "../pages/customer/Profile";
 
-function AdminDashboard() {
-  return (
-    <div className="page-placeholder">
-      <h1>QuickMart Admin</h1>
-      <p>Admin dashboard will be implemented next.</p>
-    </div>
-  );
-}
+import AdminDashboard from "../pages/admin/AdminDashboard";
 
 function NotFound() {
   return (
@@ -36,6 +31,7 @@ function AppRoutes() {
   const closeAuthModal = () => {
     if (backgroundLocation) {
       const { pathname, search, hash, state } = backgroundLocation;
+
       navigate({ pathname, search, hash }, { replace: true, state });
     } else {
       navigate("/home", { replace: true });
@@ -44,7 +40,6 @@ function AppRoutes() {
 
   return (
     <>
-      {/* Render the previous page behind the login/register popup. */}
       <Routes location={backgroundLocation || location}>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
@@ -65,13 +60,14 @@ function AppRoutes() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* One modal route set handles both login and registration popups. */}
+      {/* Existing login/register modal routing */}
       {backgroundLocation && (
         <Routes>
           <Route
             path="/login"
             element={<Login isModal onClose={closeAuthModal} />}
           />
+
           <Route
             path="/register"
             element={<Register isModal onClose={closeAuthModal} />}
