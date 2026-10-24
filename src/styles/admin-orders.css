@@ -1,0 +1,822 @@
+.qm-orders-page {
+  display: grid;
+  gap: 22px;
+  color: var(--admin-ink);
+}
+
+.qm-orders-page *,
+.qm-orders-page *::before,
+.qm-orders-page *::after {
+  box-sizing: border-box;
+}
+
+.qm-orders-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.qm-orders-eyebrow {
+  color: var(--admin-green);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+}
+
+.qm-orders-heading h3 {
+  margin: 8px 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.qm-orders-heading p {
+  margin: 0;
+  color: var(--admin-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.qm-orders-heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.qm-orders-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 39px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-orders-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.qm-orders-button-primary {
+  color: #ffffff;
+  background: var(--admin-green);
+}
+
+.qm-orders-button-primary:hover:not(:disabled) {
+  background: var(--admin-green-dark);
+}
+
+.qm-orders-button-secondary {
+  border-color: var(--admin-border);
+  color: var(--admin-ink);
+  background: #ffffff;
+}
+
+.qm-orders-button-secondary:hover:not(:disabled) {
+  border-color: #b8d8c1;
+  color: var(--admin-green-dark);
+}
+
+.qm-orders-spin {
+  animation: qm-admin-spin 1s linear infinite;
+}
+
+/* Summary */
+
+.qm-orders-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.qm-orders-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  padding: 19px;
+  border: 1px solid var(--admin-border);
+  border-radius: 13px;
+  background: #ffffff;
+}
+
+.qm-orders-summary-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  width: 43px;
+  height: 43px;
+  border-radius: 12px;
+}
+
+.qm-orders-summary-icon.green {
+  color: #16834a;
+  background: #eaf7ee;
+}
+
+.qm-orders-summary-icon.orange {
+  color: #bc7616;
+  background: #fff5e7;
+}
+
+.qm-orders-summary-icon.blue {
+  color: #3477c8;
+  background: #edf4ff;
+}
+
+.qm-orders-summary-icon.red {
+  color: #d04b40;
+  background: #fff0ee;
+}
+
+.qm-orders-summary-card div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.qm-orders-summary-card div > span {
+  color: var(--admin-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.qm-orders-summary-card strong {
+  font-size: 25px;
+  font-weight: 800;
+}
+
+/* Panel, search and filters */
+
+.qm-orders-panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(30, 55, 40, 0.025);
+}
+
+.qm-orders-toolbar {
+  display: grid;
+  gap: 17px;
+  padding: 21px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.qm-orders-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid #dfe7e0;
+  border-radius: 10px;
+  color: #7b8980;
+  background: #ffffff;
+}
+
+.qm-orders-search:focus-within {
+  border-color: #8fbea0;
+  box-shadow: 0 0 0 3px rgba(22, 131, 74, 0.08);
+}
+
+.qm-orders-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  color: var(--admin-ink);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.qm-orders-search input::placeholder {
+  color: #98a29b;
+}
+
+.qm-orders-search button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 7px;
+  color: #748078;
+  background: #f1f5f2;
+  cursor: pointer;
+}
+
+.qm-orders-filters {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.qm-orders-filters label {
+  display: grid;
+  flex: 1 1 150px;
+  gap: 7px;
+  min-width: 0;
+}
+
+.qm-orders-filters label > span {
+  color: #748078;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.qm-orders-filters select {
+  width: 100%;
+  min-height: 39px;
+  padding: 0 10px;
+  border: 1px solid #e0e8e1;
+  border-radius: 8px;
+  outline: none;
+  color: var(--admin-ink);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.qm-orders-filters select:focus {
+  border-color: #8fbea0;
+}
+
+.qm-orders-clear-button {
+  min-height: 39px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--admin-green-dark);
+  background: #eff8f1;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-orders-clear-button:hover {
+  background: #e2f3e7;
+}
+
+.qm-orders-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 18px 20px 0;
+  padding: 15px;
+  border: 1px solid #f0cfca;
+  border-radius: 10px;
+  color: #a42d26;
+  background: #fff5f3;
+}
+
+.qm-orders-error strong {
+  font-size: 12px;
+}
+
+.qm-orders-error p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Table */
+
+.qm-orders-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.qm-orders-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.qm-orders-table thead {
+  background: #fafcfa;
+}
+
+.qm-orders-table th {
+  padding: 14px 15px;
+  border-bottom: 1px solid var(--admin-border);
+  color: #829087;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.qm-orders-table td {
+  padding: 15px;
+  border-bottom: 1px solid #edf1ed;
+  color: #59675e;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+.qm-orders-table tbody tr:hover {
+  background: #fbfdfb;
+}
+
+.qm-orders-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.qm-orders-id,
+.qm-orders-amount {
+  color: var(--admin-ink) !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.qm-orders-customer {
+  display: grid;
+  gap: 5px;
+  min-width: 105px;
+}
+
+.qm-orders-customer strong {
+  color: var(--admin-ink);
+  font-size: 11px;
+}
+
+.qm-orders-customer span,
+.qm-orders-muted-small {
+  color: var(--admin-muted);
+  font-size: 10px;
+}
+
+.qm-orders-date {
+  min-width: 135px;
+  white-space: nowrap;
+}
+
+.qm-orders-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.qm-orders-status.confirmed,
+.qm-orders-status.success {
+  color: #17663d;
+  background: #e8f7ed;
+}
+
+.qm-orders-status.pending {
+  color: #986015;
+  background: #fff4df;
+}
+
+.qm-orders-status.cancelled,
+.qm-orders-status.failed {
+  color: #a72e27;
+  background: #fff0ee;
+}
+
+.qm-orders-status.unknown {
+  color: #66736a;
+  background: #eef1ee;
+}
+
+.qm-orders-view-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 31px;
+  padding: 0 9px;
+  border: 1px solid #dce9df;
+  border-radius: 7px;
+  color: var(--admin-green-dark);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-orders-view-button:hover {
+  background: #eff8f1;
+}
+
+.qm-orders-table-message {
+  height: 170px;
+  color: var(--admin-muted) !important;
+  text-align: center;
+}
+
+.qm-orders-table-message svg {
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.qm-orders-table-message strong,
+.qm-orders-table-message span {
+  display: block;
+  margin-top: 8px;
+}
+
+/* Pagination */
+
+.qm-orders-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 21px;
+  border-top: 1px solid var(--admin-border);
+}
+
+.qm-orders-pagination > span {
+  color: var(--admin-muted);
+  font-size: 11px;
+}
+
+.qm-orders-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qm-orders-pagination > div > span {
+  color: #59675e;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.qm-orders-pagination button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  color: var(--admin-ink);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qm-orders-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Order details modal */
+
+.qm-orders-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 25px;
+  background: rgba(17, 32, 23, 0.52);
+  backdrop-filter: blur(3px);
+}
+
+.qm-orders-modal {
+  width: 100%;
+  max-width: 660px;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+  border: 1px solid #e3ebe5;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+}
+
+.qm-orders-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 24px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.qm-orders-modal-header h3 {
+  margin: 7px 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.qm-orders-modal-header p {
+  margin: 0;
+  color: var(--admin-muted);
+  font-size: 11px;
+}
+
+.qm-orders-modal-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 9px;
+  color: #66736a;
+  background: #f2f6f3;
+  cursor: pointer;
+}
+
+.qm-orders-modal-close:hover {
+  color: #a72e27;
+  background: #fff0ee;
+}
+
+.qm-orders-modal-body {
+  display: grid;
+  gap: 19px;
+  padding: 22px 24px;
+}
+
+.qm-orders-detail-statuses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qm-orders-detail-statuses > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+}
+
+.qm-orders-detail-statuses > div > span:first-child {
+  color: var(--admin-muted);
+  font-size: 10px;
+}
+
+.qm-orders-detail-section {
+  padding: 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 11px;
+}
+
+.qm-orders-detail-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: var(--admin-ink);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.qm-orders-detail-section h4 svg {
+  color: var(--admin-green);
+}
+
+.qm-orders-item-list {
+  display: grid;
+  gap: 0;
+}
+
+.qm-orders-item-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf1ed;
+}
+
+.qm-orders-item-row > div {
+  display: grid;
+  gap: 6px;
+}
+
+.qm-orders-item-row > div strong {
+  color: var(--admin-ink);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.qm-orders-item-row > div span {
+  color: var(--admin-muted);
+  font-size: 10px;
+}
+
+.qm-orders-item-row > strong {
+  color: var(--admin-ink);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.qm-orders-detail-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 15px;
+}
+
+.qm-orders-detail-total span {
+  color: #57665c;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.qm-orders-detail-total strong {
+  color: var(--admin-green-dark);
+  font-size: 18px;
+  font-weight: 850;
+}
+
+.qm-orders-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 9px 0;
+}
+
+.qm-orders-info-row > span {
+  color: var(--admin-muted);
+  font-size: 11px;
+}
+
+.qm-orders-info-row > strong {
+  color: var(--admin-ink);
+  font-size: 11px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.qm-orders-address-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  color: var(--admin-green-dark);
+  background: #eaf7ee;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.qm-orders-address {
+  margin: 0;
+  color: #45564b;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.qm-orders-detail-empty {
+  margin: 0;
+  color: var(--admin-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.qm-orders-payment-info {
+  padding: 13px 0 0;
+}
+
+.qm-orders-payment-info > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.qm-orders-payment-info > span svg {
+  color: var(--admin-green);
+}
+
+.qm-orders-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid var(--admin-border);
+  background: #fbfdfb;
+}
+
+@media (max-width: 1000px) {
+  .qm-orders-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .qm-orders-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 650px) {
+  .qm-orders-page {
+    gap: 15px;
+  }
+
+  .qm-orders-heading {
+    display: grid;
+  }
+
+  .qm-orders-heading h3 {
+    font-size: 23px;
+  }
+
+  .qm-orders-heading-actions {
+    justify-content: flex-start;
+  }
+
+  .qm-orders-summary-card {
+    gap: 9px;
+    padding: 13px 10px;
+  }
+
+  .qm-orders-summary-icon {
+    flex-basis: 35px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .qm-orders-summary-card div > span {
+    font-size: 9px;
+  }
+
+  .qm-orders-summary-card strong {
+    font-size: 22px;
+  }
+
+  .qm-orders-toolbar {
+    padding: 13px;
+  }
+
+  .qm-orders-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .qm-orders-filters label {
+    min-width: 0;
+  }
+
+  .qm-orders-clear-button {
+    align-self: end;
+  }
+
+  .qm-orders-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 13px;
+  }
+
+  .qm-orders-pagination > div {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .qm-orders-modal-overlay {
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .qm-orders-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .qm-orders-modal-header,
+  .qm-orders-modal-body {
+    padding: 16px;
+  }
+
+  .qm-orders-detail-statuses {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .qm-orders-detail-section {
+    padding: 13px;
+  }
+}

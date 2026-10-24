@@ -14,3 +14,8 @@ export const retryOrderPayment = async (orderId) => {
   const response = await apiClient.post(`/orders/${orderId}/retry-payment`);
   return response.data;
 };
+
+export const getAllOrders = async () => {
+  const response = await apiClient.get("/orders/all");
+  return response.data;
+};
