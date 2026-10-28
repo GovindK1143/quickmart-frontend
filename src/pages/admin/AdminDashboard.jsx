@@ -27,6 +27,7 @@ import AdminOrders from "./AdminOrders";
 import AdminProducts from "./AdminProducts";
 import AdminCustomers from "./AdminCustomers";
 import AdminPayments from "./AdminPayments";
+import AdminReports from "./AdminReports";
 
 const adminNavigation = [
   {
@@ -807,6 +808,8 @@ function AdminDashboard() {
             <AdminCustomers />
           ) : activeSection === "payments" ? (
             <AdminPayments />
+          ) : activeSection === "reports" ? (
+            <AdminReports />
           ) : (
             <section className="qm-admin-module-placeholder">
               <span className="qm-admin-module-icon">
