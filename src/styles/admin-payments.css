@@ -1,0 +1,800 @@
+/* =========================================
+   QuickMart Admin Payments
+   ========================================= */
+
+.qm-payments-page {
+  --payments-green: var(--admin-green, #16834a);
+  --payments-green-dark: var(--admin-green-dark, #106b3b);
+  --payments-ink: var(--admin-ink, #192a23);
+  --payments-muted: var(--admin-muted, #78847d);
+  --payments-border: var(--admin-border, #e6ebe7);
+
+  display: grid;
+  gap: 22px;
+  color: var(--payments-ink);
+}
+
+.qm-payments-page *,
+.qm-payments-page *::before,
+.qm-payments-page *::after {
+  box-sizing: border-box;
+}
+
+.qm-payments-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.qm-payments-eyebrow {
+  color: var(--payments-green);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 1.5px;
+}
+
+.qm-payments-heading h3 {
+  margin: 8px 0;
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.qm-payments-heading p {
+  margin: 0;
+  color: var(--payments-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.qm-payments-heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.qm-payments-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 39px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-payments-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.qm-payments-button.primary {
+  color: #ffffff;
+  background: var(--payments-green);
+}
+
+.qm-payments-button.primary:hover:not(:disabled) {
+  background: var(--payments-green-dark);
+}
+
+.qm-payments-button.secondary {
+  border-color: var(--payments-border);
+  color: var(--payments-ink);
+  background: #ffffff;
+}
+
+.qm-payments-button.secondary:hover:not(:disabled) {
+  border-color: #b8d8c1;
+  color: var(--payments-green-dark);
+}
+
+.qm-payments-spin {
+  animation: qm-admin-spin 1s linear infinite;
+}
+
+/* Summary cards */
+
+.qm-payments-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.qm-payments-summary article {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 17px 15px;
+  border: 1px solid var(--payments-border);
+  border-radius: 13px;
+  background: #ffffff;
+}
+
+.qm-payments-summary-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 39px;
+  width: 39px;
+  height: 39px;
+  border-radius: 11px;
+}
+
+.qm-payments-summary-icon.green {
+  color: #16834a;
+  background: #eaf7ee;
+}
+
+.qm-payments-summary-icon.blue {
+  color: #3477c8;
+  background: #edf4ff;
+}
+
+.qm-payments-summary-icon.orange {
+  color: #bc7616;
+  background: #fff5e7;
+}
+
+.qm-payments-summary-icon.red {
+  color: #d04b40;
+  background: #fff0ee;
+}
+
+.qm-payments-rupee {
+  font-size: 19px;
+  font-weight: 850;
+}
+
+.qm-payments-summary article > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.qm-payments-summary article > div > span {
+  color: var(--payments-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.qm-payments-summary article strong {
+  font-size: 22px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.qm-payments-summary article strong.qm-payments-revenue {
+  font-size: clamp(15px, 1.3vw, 20px);
+}
+
+/* Notices */
+
+.qm-payments-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.qm-payments-notice > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.qm-payments-notice > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.qm-payments-notice strong {
+  font-size: 12px;
+}
+
+.qm-payments-notice p {
+  margin: 5px 0 0;
+}
+
+.qm-payments-notice.error {
+  border: 1px solid #f0cfca;
+  color: #a42d26;
+  background: #fff5f3;
+}
+
+.qm-payments-notice.warning {
+  border: 1px solid #f0dfbb;
+  color: #865914;
+  background: #fff9ed;
+}
+
+/* Search panel */
+
+.qm-payments-panel {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--payments-border);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 3px 12px rgba(30, 55, 40, 0.025);
+}
+
+.qm-payments-toolbar {
+  display: grid;
+  gap: 17px;
+  padding: 20px;
+  border-bottom: 1px solid var(--payments-border);
+}
+
+.qm-payments-search {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid #dfe7e0;
+  border-radius: 10px;
+  color: #7b8980;
+  background: #ffffff;
+}
+
+.qm-payments-search:focus-within {
+  border-color: #8fbea0;
+  box-shadow: 0 0 0 3px rgba(22, 131, 74, 0.08);
+}
+
+.qm-payments-search > svg {
+  flex: 0 0 auto;
+}
+
+.qm-payments-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  color: var(--payments-ink);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.qm-payments-search input::placeholder {
+  color: #98a29b;
+}
+
+.qm-payments-search button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 7px;
+  color: #748078;
+  background: #f1f5f2;
+  cursor: pointer;
+}
+
+.qm-payments-filters {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.qm-payments-filters label {
+  display: grid;
+  flex: 1 1 160px;
+  gap: 7px;
+  min-width: 0;
+}
+
+.qm-payments-filters label > span {
+  color: #748078;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.qm-payments-filters select {
+  width: 100%;
+  min-height: 39px;
+  padding: 0 10px;
+  border: 1px solid #e0e8e1;
+  border-radius: 8px;
+  outline: none;
+  color: var(--payments-ink);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+.qm-payments-filters select:focus {
+  border-color: #8fbea0;
+}
+
+.qm-payments-clear-button {
+  min-height: 39px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--payments-green-dark);
+  background: #eff8f1;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-payments-clear-button:hover {
+  background: #e2f3e7;
+}
+
+/* Table */
+
+.qm-payments-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.qm-payments-table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.qm-payments-table thead {
+  background: #fafcfa;
+}
+
+.qm-payments-table th {
+  padding: 14px 13px;
+  border-bottom: 1px solid var(--payments-border);
+  color: #829087;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.qm-payments-table td {
+  padding: 14px 13px;
+  border-bottom: 1px solid #edf1ed;
+  color: #59675e;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+.qm-payments-table tbody tr:hover {
+  background: #fbfdfb;
+}
+
+.qm-payments-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.qm-payments-id,
+.qm-payments-amount {
+  color: var(--payments-ink) !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.qm-payments-date {
+  min-width: 140px;
+  white-space: nowrap;
+}
+
+.qm-payments-customer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qm-payments-customer svg {
+  color: #839087;
+}
+
+.qm-payments-transaction {
+  max-width: 200px;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 10px !important;
+}
+
+.qm-payments-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.qm-payments-status.success {
+  color: #17663d;
+  background: #e8f7ed;
+}
+
+.qm-payments-status.pending {
+  color: #986015;
+  background: #fff4df;
+}
+
+.qm-payments-status.failed {
+  color: #a72e27;
+  background: #fff0ee;
+}
+
+.qm-payments-status.unknown {
+  color: #66736a;
+  background: #eef1ee;
+}
+
+.qm-payments-view-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid #dce9df;
+  border-radius: 7px;
+  color: var(--payments-green-dark);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.qm-payments-view-button:hover {
+  background: #eff8f1;
+}
+
+.qm-payments-table-message {
+  height: 170px;
+  color: var(--payments-muted) !important;
+  text-align: center;
+}
+
+.qm-payments-table-message svg {
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.qm-payments-table-message strong,
+.qm-payments-table-message span {
+  display: block;
+  margin-top: 8px;
+}
+
+/* Pagination */
+
+.qm-payments-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 21px;
+  border-top: 1px solid var(--payments-border);
+}
+
+.qm-payments-pagination > span {
+  color: var(--payments-muted);
+  font-size: 11px;
+}
+
+.qm-payments-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qm-payments-pagination > div > span {
+  color: #59675e;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.qm-payments-pagination button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--payments-border);
+  border-radius: 8px;
+  color: var(--payments-ink);
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.qm-payments-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Payment details modal */
+
+.qm-payments-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 22px;
+  background: rgba(17, 32, 23, 0.52);
+  backdrop-filter: blur(3px);
+}
+
+.qm-payments-modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: calc(100vh - 44px);
+  overflow-y: auto;
+  border: 1px solid #e3ebe5;
+  border-radius: 17px;
+  background: #ffffff;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+}
+
+.qm-payments-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 23px;
+  border-bottom: 1px solid var(--payments-border);
+}
+
+.qm-payments-modal-header h3 {
+  margin: 7px 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.qm-payments-modal-header p {
+  margin: 0;
+  color: var(--payments-muted);
+  font-size: 11px;
+}
+
+.qm-payments-modal-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 9px;
+  color: #66736a;
+  background: #f2f6f3;
+  cursor: pointer;
+}
+
+.qm-payments-modal-close:hover {
+  color: #a72e27;
+  background: #fff0ee;
+}
+
+.qm-payments-modal-body {
+  display: grid;
+  gap: 18px;
+  padding: 22px 23px;
+}
+
+.qm-payments-detail-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid #e1eee5;
+  border-radius: 12px;
+  background: #f7fbf8;
+}
+
+.qm-payments-detail-amount > span:first-child {
+  color: var(--payments-muted);
+  font-size: 11px;
+}
+
+.qm-payments-detail-amount > strong {
+  color: var(--payments-ink);
+  font-size: 30px;
+  font-weight: 850;
+}
+
+.qm-payments-detail-section {
+  padding: 16px;
+  border: 1px solid var(--payments-border);
+  border-radius: 11px;
+}
+
+.qm-payments-detail-section h4 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.qm-payments-info-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf1ed;
+}
+
+.qm-payments-info-row:last-child {
+  border-bottom: 0;
+}
+
+.qm-payments-info-row > span {
+  color: var(--payments-muted);
+  font-size: 11px;
+}
+
+.qm-payments-info-row > strong {
+  max-width: 65%;
+  color: var(--payments-ink);
+  font-size: 11px;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.qm-payments-detail-transaction {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.qm-payments-failed-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #f0cfca;
+  border-radius: 9px;
+  color: #a42d26;
+  background: #fff5f3;
+}
+
+.qm-payments-failed-note svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.qm-payments-failed-note p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.qm-payments-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 23px;
+  border-top: 1px solid var(--payments-border);
+  background: #fbfdfb;
+}
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+  .qm-payments-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1000px) {
+  .qm-payments-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .qm-payments-heading {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 650px) {
+  .qm-payments-page {
+    gap: 15px;
+  }
+
+  .qm-payments-heading {
+    display: grid;
+  }
+
+  .qm-payments-heading h3 {
+    font-size: 23px;
+  }
+
+  .qm-payments-summary article {
+    gap: 9px;
+    padding: 13px 10px;
+  }
+
+  .qm-payments-summary-icon {
+    flex-basis: 35px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .qm-payments-summary article > div > span {
+    font-size: 9px;
+  }
+
+  .qm-payments-summary article strong {
+    font-size: 19px;
+  }
+
+  .qm-payments-summary article strong.qm-payments-revenue {
+    font-size: 15px;
+  }
+
+  .qm-payments-toolbar {
+    padding: 13px;
+  }
+
+  .qm-payments-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .qm-payments-filters label {
+    min-width: 0;
+  }
+
+  .qm-payments-clear-button {
+    align-self: end;
+  }
+
+  .qm-payments-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 13px;
+  }
+
+  .qm-payments-pagination > div {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .qm-payments-modal-overlay {
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .qm-payments-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .qm-payments-modal-header,
+  .qm-payments-modal-body {
+    padding: 16px;
+  }
+
+  .qm-payments-detail-section {
+    padding: 13px;
+  }
+
+  .qm-payments-modal-footer {
+    padding: 13px 16px;
+  }
+}

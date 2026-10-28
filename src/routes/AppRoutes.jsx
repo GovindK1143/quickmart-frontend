@@ -1,16 +1,21 @@
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
-
 import Home from "../pages/customer/Home";
 import Cart from "../pages/customer/Cart";
 import Checkout from "../pages/customer/Checkout";
 import Orders from "../pages/customer/Orders";
 import Profile from "../pages/customer/Profile";
-
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import { useAuth } from "../context/useAuth";
 
 function NotFound() {
   return (
@@ -19,6 +24,27 @@ function NotFound() {
       <p>Page not found.</p>
     </div>
   );
+}
+
+function RoleBasedHome() {
+  const { user, loading, isAuthenticated } = useAuth();
+
+  // Wait until the existing authentication session is checked.
+  if (loading) {
+    return (
+      <div className="page-placeholder">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // Administrators should always land on the Admin Dashboard.
+  if (user?.role === "ADMIN" && isAuthenticated) {
+    return <Navigate to="/admin" replace />;
+  }
+
+  // Preserve the normal customer and guest homepage.
+  return <Home />;
 }
 
 function AppRoutes() {
@@ -41,8 +67,8 @@ function AppRoutes() {
   return (
     <>
       <Routes location={backgroundLocation || location}>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<RoleBasedHome />} />
+        <Route path="/home" element={<RoleBasedHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />

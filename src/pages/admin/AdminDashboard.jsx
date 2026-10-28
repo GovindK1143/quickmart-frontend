@@ -26,6 +26,7 @@ import "../../styles/admin-dashboard.css";
 import AdminOrders from "./AdminOrders";
 import AdminProducts from "./AdminProducts";
 import AdminCustomers from "./AdminCustomers";
+import AdminPayments from "./AdminPayments";
 
 const adminNavigation = [
   {
@@ -452,6 +453,7 @@ function AdminDashboard() {
               />
               Refresh
             </button>
+
             <span className="qm-admin-role-badge">
               <ShieldCheck size={15} />
               ADMIN
@@ -803,6 +805,8 @@ function AdminDashboard() {
             <AdminProducts />
           ) : activeSection === "customers" ? (
             <AdminCustomers />
+          ) : activeSection === "payments" ? (
+            <AdminPayments />
           ) : (
             <section className="qm-admin-module-placeholder">
               <span className="qm-admin-module-icon">
