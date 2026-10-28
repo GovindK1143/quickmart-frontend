@@ -38,3 +38,8 @@ export async function setMyDefaultAddress(addressId) {
 export async function deleteMyAddress(addressId) {
   await apiClient.delete(`/users/me/addresses/${addressId}`);
 }
+
+export const getAllAdminCustomers = async () => {
+  const response = await apiClient.get("/users/admin/customers");
+  return response.data;
+};
