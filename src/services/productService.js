@@ -39,3 +39,35 @@ export const searchProducts = async (keyword) => {
 
   return response.data;
 };
+
+export const getAllAdminProducts = async () => {
+  const response = await apiClient.get("/products/admin/all");
+  return response.data;
+};
+
+export const createProduct = async (product) => {
+  const response = await apiClient.post("/products/add", product);
+  return response.data;
+};
+
+export const updateProduct = async (productId, product) => {
+  const response = await apiClient.put(`/products/${productId}`, product);
+  return response.data;
+};
+
+export const updateProductStatus = async (productId, active) => {
+  const response = await apiClient.patch(
+    `/products/${productId}/status`,
+    null,
+    {
+      params: { active },
+    },
+  );
+
+  return response.data;
+};
+
+export const createProductsBulk = async (products) => {
+  const response = await apiClient.post("/products/add/bulk", products);
+  return response.data;
+};
